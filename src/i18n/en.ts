@@ -1,0 +1,32 @@
+import type { Dict } from "./zh";
+
+export const en: Dict = {
+  meta: {
+    title: "Void Architect — Hongyi Mao / Cross-World Translator / Frequency-Domain Decisions",
+    description:
+      "An independent studio at the seam of theory and reality. Frequency-domain decisions and asymmetric arbitrage, built with AI.",
+  },
+  nav: {
+    studio: "Void Architect",
+    person: "Hongyi Mao · Cross-World Translator",
+    contact: "hi@voidarchitect.studio",
+  },
+  hero: {
+    eyebrow: "/ Studio · Frequency-Domain · Asymmetric Arbitrage",
+    title1: "Void",
+    title2: "Architect",
+    body: [
+      "Working in the seam between the void and the real.",
+      "Building void structures with AI through frequency-domain thinking,",
+      "delivering asymmetric arbitrage and cross-world translation for clients.",
+    ],
+    scroll: "↓ See projects",
+    location: "2026 · Shenzhen",
+  },
+  projects: {
+    eyebrow: "/ Projects",
+    title: "Works in Progress",
+    placeholder: "Bento grid will hook into ProjectOS live data in D2.",
+  },
+  langSwitch: { other: "中", otherHref: "/" },
+};

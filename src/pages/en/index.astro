@@ -1,0 +1,8 @@
+---
+import HomePage from "../../components/HomePage.astro";
+import { en } from "../../i18n/en";
+
+export const prerender = true;
+---
+
+<HomePage dict={en} lang="en" />

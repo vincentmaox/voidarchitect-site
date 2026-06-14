@@ -62,7 +62,7 @@ const fragmentShader = /* glsl */ `
     vec2 mouse = (uMouse - 0.5);
     mouse.x *= uResolution.x / uResolution.y;
     float md = length(p - mouse);
-    vec2 warp = (p - mouse) / max(md, 0.001) * exp(-md * 4.0) * 0.18;
+    vec2 warp = (p - mouse) / max(md, 0.001) * exp(-md * 1.6) * 0.45;
 
     vec3 q = vec3(p * 1.4 + warp, uTime * 0.06);
     float n1 = fbm(q);
@@ -75,8 +75,8 @@ const fragmentShader = /* glsl */ `
     vec3 col = mix(c0, c1, smoothstep(-0.4, 0.6, n1));
     col = mix(col, c2, smoothstep(0.55, 0.95, n2) * 0.55);
 
-    // 鼠标周围加亮
-    col += exp(-md * 5.0) * 0.12;
+    // 鼠标周围加亮（更广更亮）
+    col += exp(-md * 2.0) * 0.22;
 
     // 颗粒
     float grain = fract(sin(dot(uv * uResolution, vec2(12.9898, 78.233))) * 43758.5453);
@@ -110,7 +110,7 @@ function FluidPlane() {
     const u = matRef.current.uniforms as any;
     u.uTime.value = state.clock.elapsedTime;
     // smooth mouse
-    mouse.current.lerp(target.current, 0.06);
+    mouse.current.lerp(target.current, 0.18);
     u.uMouse.value.copy(mouse.current);
     u.uResolution.value.set(size.width, size.height);
   });

@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+import FluidHero from "./FluidHero.tsx";
+import type { Dict } from "../i18n/zh";
+
+interface Props {
+  dict: Dict;
+  lang: "zh-CN" | "en";
+}
+const { dict, lang } = Astro.props;
+---
+
+<Layout title={dict.meta.title} description={dict.meta.description} lang={lang}>
+  <main class="relative min-h-screen">
+    <FluidHero client:only="react" />
+
+    <section class="relative min-h-screen flex flex-col justify-between p-8 md:p-16">
+      <header class="flex justify-between items-center text-sm font-mono uppercase tracking-widest text-void-mute">
+        <span>{dict.nav.studio}</span>
+        <span class="hidden md:inline">{dict.nav.person}</span>
+        <div class="flex items-center gap-4">
+          <a href={dict.langSwitch.otherHref} class="hover:text-void-fg transition" aria-label="switch language">
+            {dict.langSwitch.other}
+          </a>
+          <a href={`mailto:${dict.nav.contact}`} class="hover:text-void-fg transition hidden sm:inline">
+            {dict.nav.contact}
+          </a>
+        </div>
+      </header>
+
+      <div class="flex flex-col gap-6 max-w-5xl">
+        <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute">
+          {dict.hero.eyebrow}
+        </p>
+        <h1 class="text-display text-[clamp(3rem,11vw,11rem)] text-void-fg">
+          {dict.hero.title1}<br />{dict.hero.title2}
+        </h1>
+        <p class="max-w-2xl text-lg md:text-xl text-void-mute leading-relaxed">
+          {dict.hero.body.map((line, i) => (
+            <>{line}{i < dict.hero.body.length - 1 && <br />}</>
+          ))}
+        </p>
+      </div>
+
+      <footer class="flex justify-between items-end font-mono text-xs uppercase tracking-widest text-void-mute">
+        <a href="#projects" class="hover:text-void-fg transition flex items-center gap-2">
+          <span>{dict.hero.scroll}</span>
+        </a>
+        <span class="hidden md:block">{dict.hero.location}</span>
+      </footer>
+    </section>
+
+    <section id="projects" class="relative bg-void-bg py-32 px-8 md:px-16">
+      <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute mb-4">
+        {dict.projects.eyebrow}
+      </p>
+      <h2 class="text-display text-5xl md:text-7xl mb-16">{dict.projects.title}</h2>
+      <p class="text-void-mute max-w-2xl">{dict.projects.placeholder}</p>
+    </section>
+  </main>
+</Layout>

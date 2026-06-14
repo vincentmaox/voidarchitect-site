@@ -1,49 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import FluidHero from "../components/FluidHero.tsx";
+import HomePage from "../components/HomePage.astro";
+import { zh } from "../i18n/zh";
+
+export const prerender = true;
 ---
 
-<Layout>
-  <main class="relative min-h-screen">
-    <FluidHero client:only="react" />
-
-    <section class="relative min-h-screen flex flex-col justify-between p-8 md:p-16">
-      <header class="flex justify-between items-center text-sm font-mono uppercase tracking-widest text-void-mute">
-        <span>Void Architect</span>
-        <span class="hidden md:inline">茅弘毅 · 弘毅 · 双世界译员</span>
-        <a href="mailto:hi@voidarchitect.studio" class="hover:text-void-fg transition">hi@voidarchitect.studio</a>
-      </header>
-
-      <div class="flex flex-col gap-6 max-w-5xl">
-        <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute">
-          / Studio · 频域决策 · 非对称风险套利
-        </p>
-        <h1 class="text-display text-[clamp(3rem,11vw,11rem)] text-void-fg">
-          Void<br />Architect
-        </h1>
-        <p class="max-w-xl text-lg md:text-xl text-void-mute leading-relaxed">
-          活在理论世界与现实世界交界处。<br />
-          用 AI 与频域思维构筑虚空建筑，<br />
-          为客户做非对称风险套利与跨界翻译。
-        </p>
-      </div>
-
-      <footer class="flex justify-between items-end font-mono text-xs uppercase tracking-widest text-void-mute">
-        <a href="#projects" class="hover:text-void-fg transition flex items-center gap-2">
-          <span>↓ 查看项目</span>
-        </a>
-        <span class="hidden md:block">2026 · Shenzhen</span>
-      </footer>
-    </section>
-
-    <section id="projects" class="relative bg-void-bg py-32 px-8 md:px-16">
-      <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute mb-4">
-        / Projects
-      </p>
-      <h2 class="text-display text-5xl md:text-7xl mb-16">在建工程</h2>
-      <p class="text-void-mute max-w-2xl">
-        Bento Grid 项目矩阵将在 D2 接入 ProjectOS 实时数据。
-      </p>
-    </section>
-  </main>
-</Layout>
+<HomePage dict={zh} lang="zh-CN" />
