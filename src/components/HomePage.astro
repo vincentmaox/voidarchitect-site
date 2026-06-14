@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FluidHero from "./FluidHero.tsx";
+import ProjectGrid from "./ProjectGrid.astro";
 import type { Dict } from "../i18n/zh";
 
 interface Props {
@@ -50,12 +51,18 @@ const { dict, lang } = Astro.props;
       </footer>
     </section>
 
-    <section id="projects" class="relative bg-void-bg py-32 px-8 md:px-16">
-      <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute mb-4">
-        {dict.projects.eyebrow}
-      </p>
-      <h2 class="text-display text-5xl md:text-7xl mb-16">{dict.projects.title}</h2>
-      <p class="text-void-mute max-w-2xl">{dict.projects.placeholder}</p>
-    </section>
+    <ProjectGrid dict={dict} />
+
+    <footer class="relative bg-void-bg border-t border-zinc-800/50 py-10 px-6 md:px-16">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4 font-mono text-xs uppercase tracking-widest text-void-mute">
+        <span>{dict.footer.rights}</span>
+        <div class="flex gap-6">
+          <a href={`mailto:${dict.nav.contact}`} class="hover:text-void-fg transition">
+            {dict.nav.contact}
+          </a>
+          <span class="hidden md:inline">{dict.footer.poweredBy}</span>
+        </div>
+      </div>
+    </footer>
   </main>
 </Layout>

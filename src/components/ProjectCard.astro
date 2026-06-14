@@ -1,0 +1,127 @@
+---
+import type { PublicProject } from "../lib/registry";
+import type { Dict } from "../i18n/zh";
+
+interface Props {
+  p: PublicProject;
+  dict: Dict;
+  big?: boolean;
+}
+const { p, dict, big = false } = Astro.props;
+
+function stageColor(stage: string): string {
+  switch (stage) {
+    case "All-in":
+      return "border-void-accent/60 bg-void-accent/[0.04]";
+    case "活跃":
+      return "border-emerald-400/30 bg-emerald-400/[0.03]";
+    case "野化":
+      return "border-fuchsia-400/30 bg-fuchsia-400/[0.03]";
+    case "Watch":
+      return "border-sky-400/30 bg-sky-400/[0.03]";
+    case "停滞":
+      return "border-zinc-500/25 bg-zinc-500/[0.03]";
+    case "已归档":
+    case "Kill":
+      return "border-zinc-700/40 bg-zinc-900/30 opacity-70";
+    default:
+      return "border-zinc-700/40";
+  }
+}
+
+function stageDot(stage: string): string {
+  switch (stage) {
+    case "All-in":
+      return "bg-void-accent shadow-[0_0_12px_2px_rgba(251,191,36,0.5)]";
+    case "活跃":
+      return "bg-emerald-400";
+    case "野化":
+      return "bg-fuchsia-400";
+    case "Watch":
+      return "bg-sky-400";
+    case "停滞":
+      return "bg-zinc-500";
+    default:
+      return "bg-zinc-600";
+  }
+}
+
+const colorCls = stageColor(p.stage);
+const dotCls = stageDot(p.stage);
+const stageText = dict.projects.stageLabels[p.stage] ?? p.stage;
+const desc = p.description?.trim() || dict.projects.fallbackDescription;
+const sizeCls = big
+  ? "md:col-span-2 lg:col-span-2 md:row-span-2 p-7 md:p-8"
+  : "p-5 md:p-6";
+---
+
+<article
+  class:list={[
+    "project-card relative rounded-2xl border backdrop-blur-sm flex flex-col justify-between gap-4",
+    colorCls,
+    sizeCls,
+  ]}
+>
+  <header class="flex items-start justify-between gap-4">
+    <div class="flex flex-col gap-2 min-w-0">
+      <div class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-void-mute">
+        <span class={`inline-block w-1.5 h-1.5 rounded-full ${dotCls}`}></span>
+        <span>{stageText}</span>
+        {p.freq_total !== null && p.freq_total !== undefined && (
+          <span class="text-void-mute/60">· {dict.projects.freqLabel} {p.freq_total}</span>
+        )}
+      </div>
+      <h3
+        class:list={[
+          "font-mono text-void-fg leading-tight break-words",
+          big ? "text-2xl md:text-3xl" : "text-base md:text-lg",
+        ]}
+      >
+        {p.name}
+      </h3>
+    </div>
+  </header>
+
+  <p
+    class:list={[
+      "text-void-mute leading-relaxed flex-1",
+      big ? "text-base md:text-lg max-w-xl" : "text-xs md:text-sm",
+    ]}
+  >
+    {desc}
+  </p>
+
+  <footer class="flex items-end justify-between gap-3 pt-2 border-t border-zinc-800/60">
+    <div class="font-mono text-[10px] text-void-mute/70 leading-relaxed truncate min-w-0 flex-1">
+      {p.last_action ? (
+        <>
+          <span class="text-void-mute/50">{dict.projects.lastActionLabel} · {p.last_action.date}</span>
+          <br />
+          <span class="text-void-mute truncate block">{p.last_action.message}</span>
+        </>
+      ) : (
+        <span class="text-void-mute/40">—</span>
+      )}
+    </div>
+    {p.github_url && (
+      <a
+        href={p.github_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-void-mute hover:text-void-accent transition px-2 py-1 border border-zinc-700/60 rounded-md hover:border-void-accent/60"
+      >
+        {dict.projects.repoLabel} ↗
+      </a>
+    )}
+  </footer>
+</article>
+
+<style>
+  .project-card {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.4s, background-color 0.4s;
+  }
+  .project-card:hover {
+    transform: translateY(-2px);
+  }
+</style>

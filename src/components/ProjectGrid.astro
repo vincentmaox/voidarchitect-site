@@ -1,0 +1,46 @@
+---
+import type { PublicProject } from "../lib/registry";
+import { loadRegistry } from "../lib/registry";
+import type { Dict } from "../i18n/zh";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  dict: Dict;
+}
+const { dict } = Astro.props;
+
+const registry = await loadRegistry();
+const projects = registry.projects;
+
+function isFeatured(p: PublicProject): boolean {
+  return p.stage === "All-in" || (p.freq_total ?? 0) >= 12;
+}
+
+const featured = projects.filter(isFeatured).slice(0, 2);
+const rest = projects.filter((p) => !featured.includes(p));
+---
+
+<section id="projects" class="relative bg-void-bg py-24 md:py-32 px-6 md:px-16">
+  <div class="max-w-7xl mx-auto">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute mb-4">
+      {dict.projects.eyebrow}
+    </p>
+    <h2 class="text-display text-5xl md:text-7xl mb-4">{dict.projects.title}</h2>
+    <p class="text-void-mute text-sm md:text-base mb-12 md:mb-16 max-w-2xl">
+      {dict.projects.subtitle}
+    </p>
+
+    {projects.length === 0 ? (
+      <p class="text-void-mute">{dict.projects.empty}</p>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 auto-rows-[minmax(180px,auto)]">
+        {featured.map((p) => (
+          <ProjectCard p={p} dict={dict} big />
+        ))}
+        {rest.map((p) => (
+          <ProjectCard p={p} dict={dict} />
+        ))}
+      </div>
+    )}
+  </div>
+</section>
