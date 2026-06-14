@@ -57,5 +57,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
     maxAge: COOKIE_MAX_AGE,
     sameSite: "lax",
   });
-  return next();
+  const res = await next();
+  // 让 Vercel CDN 按国别 + cookie 分桶，避免 US 用户拿到中文缓存版本
+  res.headers.set("Vary", "x-vercel-ip-country, Cookie");
+  res.headers.set("Cache-Control", "s-maxage=300, stale-while-revalidate=3600");
+  return res;
 });

@@ -2,7 +2,9 @@
 import HomePage from "../components/HomePage.astro";
 import { zh } from "../i18n/zh";
 
-export const prerender = true;
+// 不预渲染：让 middleware 在每次请求时运行做 IP 重定向。
+// 国别 + cookie 维度由 middleware 设置 Vary header 让 CDN 按地区分桶缓存。
+export const prerender = false;
 ---
 
 <HomePage dict={zh} lang="zh-CN" />
