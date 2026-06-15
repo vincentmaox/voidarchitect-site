@@ -22,10 +22,10 @@
 |---|---|---|
 | 框架 | Astro 6 | `output: 'server'`，根页 `prerender = false` |
 | UI | React 19 | 仅 Hero 一处用 islands（`client:only="react"`） |
-| 样式 | Tailwind CSS 4 | `@theme` directive 定义暗色 token |
-| 3D Hero | three.js + R3F + drei | GLSL fragment shader 自写 |
-| 动效 | framer-motion + lenis | 暂未深度使用，预留 |
-| 部署 | @astrojs/vercel | Edge middleware 跑 IP 路由 |
+| 样式 | Tailwind CSS 4 | `@theme` 定义 token：#0D1117 / #00D4FF / #FF6B35 |
+| 3D Hero | three.js + R3F + drei | GLSL fragment shader（电光青 + 炽热橙双色域） |
+| 动效 | framer-motion + CSS | 鼠标光晕 + 发光球 + glass hover |
+| 部署 | @astrojs/vercel | Edge middleware + 跨仓 webhook 自动 rebuild |
 
 ## 目录结构
 
@@ -48,7 +48,9 @@ voidarchitect-site/
 │  │  ├─ zh.ts                # Dict 类型源（中文）
 │  │  └─ en.ts                # 英文版（typed Dict）
 │  ├─ styles/
-│  │  └─ global.css           # @theme + .noise + .text-display
+│  │  └─ global.css           # @theme + .noise + .text-display + .glass + .gradient-border
+│  ├─ docs/
+│  │  └─ journal/             # 项目日志（按日期）
 │  └─ middleware.ts           # IP 路由 + cookie sticky
 ├─ astro.config.mjs           # output:'server' + react + vercel adapter
 ├─ package.json
@@ -80,22 +82,47 @@ const REGISTRY_URL = "https://raw.githubusercontent.com/vincentmaox/Object-OS-CC
 
 ### `src/components/FluidHero.tsx`
 
-GLSL fragment shader 自写。3 色板：暗墨（`#0a0a0c`）/ 烟青（`#3a4a5a`）/ 暗金（`vec3(0.98, 0.75, 0.14)`）。
+GLSL fragment shader 自写。当前配色：**电光青 + 炽热橙 + 深海蓝** 三色域（大片感）。
 
-调参点（如未来要继续打磨）：
 ```glsl
-vec2 warp = (p - mouse) / max(md, 0.001) * exp(-md * 1.6) * 0.45;
-//                                              ^^^^^^^^^^^^^^^^ 跟手范围/强度
-col += exp(-md * 2.0) * 0.22;
-//                       ^^^^ 鼠标周围发光强度
+vec3 c0 = vec3(0.05, 0.07, 0.12);  // 深底
+vec3 c1 = vec3(0.00, 0.83, 1.00);  // #00D4FF 电光青
+vec3 c2 = vec3(1.00, 0.42, 0.21);  // #FF6B35 炽热橙
+vec3 c3 = vec3(0.04, 0.12, 0.25);  // 深海蓝
 ```
-TS 里 lerp：`mouse.current.lerp(target.current, 0.18);`（0.18 = 当前值，越大跟手越紧）
+
+调参点：
+```glsl
+vec2 warp = (p - mouse) / max(md, 0.001) * exp(-md * 1.6) * 0.45;  // 跟手范围
+col += exp(-md * 2.0) * 0.25 * c1;  // 鼠标周围发光（青）
+```
+TS 里 lerp：`mouse.current.lerp(target.current, 0.18);`
+
+### `src/components/HomePage.astro`
+
+Hero 结构：
+1. **FluidHero**（底层，全屏 R3F WebGL）
+2. **渐变发光球**（CSS `animation: orbFloat1/2/3`，零 JS，3 个不同颜色/速度的 radial-gradient blur 球）
+3. **渐变遮罩**（`from-void-bg/40 via-transparent to-void-bg/90`，保证文字可读）
+4. **内容层**（header + h1 text-glow + body + footer）
+5. **鼠标跟随光晕**（`#cursor-glow`，300px radial-gradient，纯 CSS transition + JS RAF）
+
+```css
+.text-glow {
+  text-shadow: 0 0 60px rgba(0,212,255,0.3),
+               0 0 120px rgba(0,212,255,0.15),
+               0 0 180px rgba(0,212,255,0.08);
+}
+```
 
 ### `src/components/ProjectGrid.astro` + `ProjectCard.astro`
 
 - featured = `stage === "All-in"` 或 `freq_total >= 12`，最多 2 张，2x2 大卡
 - 其他都是小卡
-- 配色 stage-driven（All-in 暗金光晕 / 活跃翠绿 / 野化紫红 / Watch 天蓝 / 停滞灰 / 已归档暗）
+- **卡片结构**：渐变顶部色带（图片占位区，项目名首字母大图标）+ glass 拟态主体 + tech_stack 标签 + footer
+- 配色 stage-driven（badge 胶囊样式）
+- **Glass 效果**：`background: rgba(22,27,34,0.5); backdrop-filter: blur(20px); border: 1px solid rgba(48,54,61,0.6)`
+- 悬停：`translateY(-3px)` + cyan shadow + border 高亮
 
 ## 数据通道
 
@@ -116,7 +143,12 @@ GitHub: vincentmaox/Object-OS-CC/main/data/public-registry.json
 voidarchitect-site Static Generation 注入 ProjectGrid
 ```
 
-**目前不是实时同步**：每次 ProjectOS push 后需要在 voidarchitect-site Vercel Dashboard 点一次 Redeploy（或推一个空 commit）。D3 候选做 GitHub Action 跨仓 webhook 自动化。
+**实时同步**：ProjectOS `daily_projectos_report.py` 每天 9:07 跑完后自动 `git commit + push` → GitHub Actions webhook 触发 → Vercel Deploy Hook → voidarchitect-site 自动 rebuild。零人工。
+
+webhook 配置：
+- ProjectOS 侧：`.github/workflows/trigger-site-rebuild.yml`，监听 `data/public-*.json` 变更
+- secret：`VERCEL_DEPLOY_HOOK`（在 ProjectOS GitHub repo settings → Secrets → Actions）
+- Vercel 侧：Dashboard → voidarchitect-site → Settings → Git → Deploy Hook（branch: main）
 
 ## 公开 / 私有边界（重要）
 
@@ -193,11 +225,13 @@ data/feishu-base-config.json
 
 ## 升级路径（D3+）
 
-- **D3.1** GitHub Action：ProjectOS push → repository_dispatch → voidarchitect-site rebuild（实时同步公开 registry）
+- ✅ **D3.1** 跨仓 webhook（ProjectOS push → GitHub Actions → Vercel rebuild）— 已完成
 - **D3.2** 详情页 `/projects/[slug]`：每个项目详情 + view transitions
 - **D3.3** voidcompass 旧仓 README 加 deprecation notice + 指向新仓
 - **D3.4** Lighthouse 优化：当前 Hero shader 较重，可加 `@media (prefers-reduced-motion)` 降级到静态背景
 - **D3.5** RSS / Atom feed of last_action（社交圈想订阅老茅近期活动）
+- **D3.6** 产品图占位 → 真实项目截图（每个项目加 `public/images/` 缩略图）
+- **D3.7** 项目卡悬停动画增强（Framer Motion：scale + glow intensity 渐变）
 
 ## 协作约定
 

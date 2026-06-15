@@ -55,6 +55,9 @@ ProjectOS 主仓相关日志（在 `D:/ClaudeCodeProjects/_ProjectOS`）：
 - ✅ D1 脚手架（Astro 6 + R3F WebGL Hero）
 - ✅ D2.1 Bento Grid（fetch ProjectOS public-registry）
 - ✅ D2.2 Vercel 上线
-- ⏸ D3.1 GitHub Action 跨仓 webhook（实时同步）
-- ⏸ D3.2 详情页 + view transitions
-- ⏸ D3.3 voidcompass 归档跳转
+- ✅ D2.3 蓝青科技风过渡版
+- ✅ D2.4 大片感终版（电光青 + 炽热橙双色流体 + 渐变发光球 + 鼠标光晕 + 玻璃拟态卡片）
+- ✅ D3.1 跨仓 webhook（ProjectOS push → GitHub Actions → Vercel rebuild，实时同步）
+- ⏸ D3.2 详情页 `/projects/[slug]` + view transitions
+- ⏸ D3.3 voidcompass 旧仓归档跳转
+- ⏸ D3.6 产品图占位 → 真实项目截图
