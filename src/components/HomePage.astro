@@ -13,12 +13,25 @@ const { dict, lang } = Astro.props;
 
 <Layout title={dict.meta.title} description={dict.meta.description} lang={lang}>
   <main class="relative min-h-screen">
-    {/* Hero: 流体做全屏背景 + 文字叠加 */}
+    <!-- Hero: 全屏流体背景 + 文字叠加 -->
     <section class="relative min-h-screen flex flex-col justify-between overflow-hidden">
       <FluidHero client:only="react" />
 
-      {/* 半透明渐变叠层——让文字可读但保留流体感 */}
-      <div class="absolute inset-0 bg-gradient-to-b from-void-bg/30 via-transparent to-void-bg/80 pointer-events-none z-[1]"></div>
+      <!-- 缓慢移动的渐变发光球 -->
+      <div class="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
+        <div class="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
+          style="background: radial-gradient(circle, #00D4FF, transparent 70%); top: 10%; left: 60%; animation: orbFloat1 20s ease-in-out infinite;"
+        />
+        <div class="absolute w-[400px] h-[400px] rounded-full opacity-15 blur-[100px]"
+          style="background: radial-gradient(circle, #FF6B35, transparent 70%); top: 50%; left: 10%; animation: orbFloat2 25s ease-in-out infinite;"
+        />
+        <div class="absolute w-[500px] h-[500px] rounded-full opacity-10 blur-[90px]"
+          style="background: radial-gradient(circle, #3B82F6, transparent 70%); top: 70%; left: 50%; animation: orbFloat3 18s ease-in-out infinite;"
+        />
+      </div>
+
+      <!-- 渐变遮罩——让文字可读 -->
+      <div class="absolute inset-0 bg-gradient-to-b from-void-bg/40 via-transparent to-void-bg/90 pointer-events-none z-[2]" />
 
       <header class="relative z-10 flex justify-between items-center p-6 md:p-10 text-sm font-mono uppercase tracking-widest text-void-mute">
         <span class="text-void-fg/80">{dict.nav.studio}</span>
@@ -34,14 +47,14 @@ const { dict, lang } = Astro.props;
       </header>
 
       <div class="relative z-10 flex flex-col gap-8 max-w-5xl px-6 md:px-10 py-8">
-        <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-accent/70">
+        <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-accent/60">
           {dict.hero.eyebrow}
         </p>
-        <h1 class="text-display text-[clamp(3.5rem,12vw,12rem)] text-void-fg text-glow">
+        <h1 class="text-display text-[clamp(4rem,13vw,14rem)] text-void-fg text-glow">
           {dict.hero.title1}<br />
           <span class="text-void-accent">{dict.hero.title2}</span>
         </h1>
-        <p class="max-w-2xl text-lg md:text-2xl text-void-fg/70 leading-relaxed font-light">
+        <p class="max-w-2xl text-lg md:text-2xl text-void-fg/80 leading-relaxed font-light">
           {dict.hero.body.map((line, i) => (
             <>{line}{i < dict.hero.body.length - 1 && <br />}</>
           ))}
@@ -51,7 +64,7 @@ const { dict, lang } = Astro.props;
       <footer class="relative z-10 flex justify-between items-end p-6 md:p-10 font-mono text-xs uppercase tracking-widest text-void-mute">
         <a href="#projects" class="hover:text-void-accent transition flex items-center gap-2 group">
           <span class="group-hover:text-void-accent">{dict.hero.scroll}</span>
-          <span class="inline-block w-5 h-5 rounded-full border border-void-accent/40 group-hover:border-void-accent flex items-center justify-center text-void-accent text-[10px]">↓</span>
+          <span class="inline-block w-5 h-5 rounded-full border border-void-accent/40 group-hover:border-void-accent group-hover:bg-void-accent/10 flex items-center justify-center text-void-accent text-[10px]">↓</span>
         </a>
         <span class="hidden md:block">{dict.hero.location}</span>
       </footer>
@@ -59,7 +72,7 @@ const { dict, lang } = Astro.props;
 
     <ProjectGrid dict={dict} />
 
-    <footer class="relative bg-void-bg border-t border-cyan-900/30 py-10 px-6 md:px-16">
+    <footer class="relative py-10 px-6 md:px-16">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4 font-mono text-xs uppercase tracking-widest text-void-mute">
         <span>{dict.footer.rights}</span>
         <div class="flex gap-6">
@@ -71,4 +84,43 @@ const { dict, lang } = Astro.props;
       </div>
     </footer>
   </main>
+
+  <!-- 鼠标跟随光晕 -->
+  <div id="cursor-glow" class="fixed pointer-events-none z-40 hidden md:block"
+    style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.12), transparent 70%); transform: translate(-50%, -50%); transition: transform 0.15s ease-out;"
+  />
+
+  <script is:inline>
+    (function() {
+      const glow = document.getElementById('cursor-glow');
+      if (!glow) return;
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+      function animate() {
+        cx += (mx - cx) * 0.1;
+        cy += (my - cy) * 0.1;
+        glow.style.left = cx + 'px';
+        glow.style.top = cy + 'px';
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+
+  <style>
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-80px, 40px) scale(1.1); }
+      66% { transform: translate(40px, -60px) scale(0.9); }
+    }
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(60px, -30px) scale(1.2); }
+      66% { transform: translate(-40px, 50px) scale(0.8); }
+    }
+    @keyframes orbFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-60px, -40px) scale(1.15); }
+    }
+  </style>
 </Layout>

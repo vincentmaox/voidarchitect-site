@@ -20,7 +20,7 @@ const featured = projects.filter(isFeatured).slice(0, 2);
 const rest = projects.filter((p) => !featured.includes(p));
 ---
 
-<section id="projects" class="relative py-24 md:py-32 px-6 md:px-16 bg-gradient-to-b from-void-bg via-[#070d1e] to-void-bg">
+<section id="projects" class="relative py-24 md:py-32 px-6 md:px-16 bg-void-bg">
   <div class="max-w-7xl mx-auto">
     <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-accent/60 mb-4">
       {dict.projects.eyebrow}
@@ -35,7 +35,7 @@ const rest = projects.filter((p) => !featured.includes(p));
     {projects.length === 0 ? (
       <p class="text-void-mute">{dict.projects.empty}</p>
     ) : (
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 auto-rows-[minmax(180px,auto)]">
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 auto-rows-[minmax(240px,auto)]">
         {featured.map((p) => (
           <ProjectCard p={p} dict={dict} big />
         ))}

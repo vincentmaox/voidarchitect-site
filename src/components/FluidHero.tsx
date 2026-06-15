@@ -12,7 +12,6 @@ const vertexShader = /* glsl */ `
   }
 `;
 
-// 蓝青流体 — simplex noise + domain warp，鼠标位置扭曲场域
 const fragmentShader = /* glsl */ `
   precision highp float;
   varying vec2 vUv;
@@ -20,7 +19,6 @@ const fragmentShader = /* glsl */ `
   uniform vec2  uMouse;
   uniform vec2  uResolution;
 
-  // Simplex noise 3D (Ashima)
   vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
   vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
   vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
@@ -47,7 +45,6 @@ const fragmentShader = /* glsl */ `
     return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
   }
 
-  // Domain warp
   float fbm(vec3 p) {
     float v = 0.0; float a = 0.5;
     for (int i = 0; i < 4; i++) { v += a * snoise(p); p *= 2.0; a *= 0.5; }
@@ -67,23 +64,27 @@ const fragmentShader = /* glsl */ `
     vec3 q = vec3(p * 1.4 + warp, uTime * 0.06);
     float n1 = fbm(q);
     float n2 = fbm(q + vec3(n1) * 0.6 + vec3(0.0, 0.0, 1.7));
+    float n3 = fbm(q + vec3(n2) * 0.4 + vec3(2.0, 1.0, 0.0));
 
-    // 深蓝 / 电青 / 亮蓝 三色调
-    vec3 c0 = vec3(0.02, 0.04, 0.10);
-    vec3 c1 = vec3(0.04, 0.15, 0.30);
-    vec3 c2 = vec3(0.13, 0.83, 0.93);
-    vec3 col = mix(c0, c1, smoothstep(-0.4, 0.6, n1));
-    col = mix(col, c2, smoothstep(0.55, 0.95, n2) * 0.50);
+    // 电光青 / 炽热橙 / 深海蓝 三色调
+    vec3 c0 = vec3(0.05, 0.07, 0.12);  // 深底
+    vec3 c1 = vec3(0.00, 0.83, 1.00);  // #00D4FF 电光青
+    vec3 c2 = vec3(1.00, 0.42, 0.21);  // #FF6B35 炽热橙
+    vec3 c3 = vec3(0.04, 0.12, 0.25);  // 深海蓝
+
+    vec3 col = mix(c0, c3, smoothstep(-0.4, 0.6, n1));
+    col = mix(col, c1, smoothstep(0.50, 0.95, n2) * 0.50);
+    col = mix(col, c2, smoothstep(0.60, 0.98, n3) * 0.35);
 
     // 鼠标周围加亮
-    col += exp(-md * 2.0) * 0.22;
+    col += exp(-md * 2.0) * 0.25 * c1;
 
     // 颗粒
     float grain = fract(sin(dot(uv * uResolution, vec2(12.9898, 78.233))) * 43758.5453);
-    col += (grain - 0.5) * 0.02;
+    col += (grain - 0.5) * 0.015;
 
     // vignette
-    float vig = smoothstep(1.4, 0.3, length(p));
+    float vig = smoothstep(1.5, 0.3, length(p));
     col *= vig;
 
     gl_FragColor = vec4(col, 1.0);
