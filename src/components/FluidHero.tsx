@@ -12,7 +12,7 @@ const vertexShader = /* glsl */ `
   }
 `;
 
-// 流体噪声 — 基于 simplex noise + domain warping，鼠标位置扭曲场域
+// 蓝青流体 — simplex noise + domain warp，鼠标位置扭曲场域
 const fragmentShader = /* glsl */ `
   precision highp float;
   varying vec2 vUv;
@@ -68,22 +68,22 @@ const fragmentShader = /* glsl */ `
     float n1 = fbm(q);
     float n2 = fbm(q + vec3(n1) * 0.6 + vec3(0.0, 0.0, 1.7));
 
-    // 暗调金 / 烟青 / 墨黑 三色调
-    vec3 c0 = vec3(0.04, 0.04, 0.05);
-    vec3 c1 = vec3(0.10, 0.13, 0.18);
-    vec3 c2 = vec3(0.98, 0.75, 0.14);
+    // 深蓝 / 电青 / 亮蓝 三色调
+    vec3 c0 = vec3(0.02, 0.04, 0.10);
+    vec3 c1 = vec3(0.04, 0.15, 0.30);
+    vec3 c2 = vec3(0.13, 0.83, 0.93);
     vec3 col = mix(c0, c1, smoothstep(-0.4, 0.6, n1));
-    col = mix(col, c2, smoothstep(0.55, 0.95, n2) * 0.55);
+    col = mix(col, c2, smoothstep(0.55, 0.95, n2) * 0.50);
 
-    // 鼠标周围加亮（更广更亮）
+    // 鼠标周围加亮
     col += exp(-md * 2.0) * 0.22;
 
     // 颗粒
     float grain = fract(sin(dot(uv * uResolution, vec2(12.9898, 78.233))) * 43758.5453);
-    col += (grain - 0.5) * 0.025;
+    col += (grain - 0.5) * 0.02;
 
     // vignette
-    float vig = smoothstep(1.2, 0.3, length(p));
+    float vig = smoothstep(1.4, 0.3, length(p));
     col *= vig;
 
     gl_FragColor = vec4(col, 1.0);
@@ -109,13 +109,11 @@ function FluidPlane() {
     if (!matRef.current) return;
     const u = matRef.current.uniforms as any;
     u.uTime.value = state.clock.elapsedTime;
-    // smooth mouse
     mouse.current.lerp(target.current, 0.18);
     u.uMouse.value.copy(mouse.current);
     u.uResolution.value.set(size.width, size.height);
   });
 
-  // 鼠标全局监听
   useMemo(() => {
     if (typeof window === "undefined") return;
     const onMove = (e: MouseEvent) => {

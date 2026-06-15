@@ -20,7 +20,7 @@ export const en: Dict = {
       "Building void structures with AI through frequency-domain thinking,",
       "delivering asymmetric arbitrage and cross-world translation for clients.",
     ],
-    scroll: "↓ See projects",
+    scroll: "See projects",
     location: "2026 · Shenzhen",
   },
   projects: {

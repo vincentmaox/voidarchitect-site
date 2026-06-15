@@ -20,12 +20,14 @@ const featured = projects.filter(isFeatured).slice(0, 2);
 const rest = projects.filter((p) => !featured.includes(p));
 ---
 
-<section id="projects" class="relative bg-void-bg py-24 md:py-32 px-6 md:px-16">
+<section id="projects" class="relative py-24 md:py-32 px-6 md:px-16 bg-gradient-to-b from-void-bg via-[#070d1e] to-void-bg">
   <div class="max-w-7xl mx-auto">
-    <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-mute mb-4">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-accent/60 mb-4">
       {dict.projects.eyebrow}
     </p>
-    <h2 class="text-display text-5xl md:text-7xl mb-4">{dict.projects.title}</h2>
+    <h2 class="text-display text-5xl md:text-7xl mb-4 text-void-fg">
+      {dict.projects.title}
+    </h2>
     <p class="text-void-mute text-sm md:text-base mb-12 md:mb-16 max-w-2xl">
       {dict.projects.subtitle}
     </p>

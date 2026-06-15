@@ -17,7 +17,7 @@ export const zh = {
       "与 AI 共同用频域思维构筑虚空世界，",
       "为客户做非对称风险套利与跨界交流。",
     ],
-    scroll: "↓ 查看项目",
+    scroll: "查看项目",
     location: "2026 · Shenzhen",
   },
   projects: {
@@ -27,7 +27,7 @@ export const zh = {
     empty: "暂无可公开项目（数据接入中）。",
     freqLabel: "三频",
     repoLabel: "GitHub",
-    lastActionLabel: "最近动作",
+    lastActionLabel: "最近",
     stageLabels: {
       "All-in": "All-in",
       "活跃": "活跃",
