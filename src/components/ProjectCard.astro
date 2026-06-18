@@ -51,6 +51,8 @@ const productLabel = p.product_label?.trim() || "Independent App";
 const coverImage = p.cover_image?.trim();
 const slug = productSlug(p);
 const detailHref = slug ? `/projects/${slug}` : null;
+const coverTransition = slug ? `product-cover-${slug}` : undefined;
+const titleTransition = slug ? `product-title-${slug}` : undefined;
 const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 ---
 
@@ -71,7 +73,7 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
   >
     {coverImage ? (
       <>
-        <img src={coverImage} alt={`${p.name} cover`} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+        <img src={coverImage} alt={`${p.name} cover`} loading="lazy" decoding="async" transition:name={coverTransition} class="absolute inset-0 h-full w-full object-cover" />
         <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.04)_0%,rgba(5,7,10,0.12)_38%,rgba(5,7,10,0.48)_100%)]" />
       </>
     ) : (
@@ -108,7 +110,7 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
       )}
     </div>
 
-    <h3 class:list={["leading-[1.02] tracking-[-0.055em] text-void-ink", big ? "text-3xl font-bold md:text-5xl" : "text-2xl font-bold"]}>
+    <h3 transition:name={titleTransition} class:list={["leading-[1.02] tracking-[-0.055em] text-void-ink", big ? "text-3xl font-bold md:text-5xl" : "text-2xl font-bold"]}>
       {p.name}
     </h3>
 

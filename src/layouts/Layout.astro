@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
@@ -32,6 +33,7 @@ const {
       rel="stylesheet"
     />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body class="noise">
     <slot />
