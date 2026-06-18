@@ -1,0 +1,144 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { Dict } from "../i18n/zh";
+
+type Locale = "zh" | "en";
+
+interface Props {
+  dict: Dict;
+  locale: Locale;
+}
+
+const { dict, locale } = Astro.props;
+const basePath = locale === "en" ? "/en" : "";
+const contactEmail = dict.nav.contact;
+const title = locale === "en" ? "Contact Void Architect | Product Diagnosis" : "联系 Void Architect | 产品诊断";
+const description = locale === "en"
+  ? "Choose a lightweight consultation track and open a pre-filled email to Void Architect Studio."
+  : "选择一个轻量咨询方向，自动生成邮件联系 Void Architect Studio。";
+const intro = locale === "en"
+  ? {
+      eyebrow: "D3.14 · Contact Entry",
+      title: "Start with a high-signal product conversation.",
+      body: "No database, no form backend, no tracking funnel. Choose the closest track and send a focused email. If the signal is strong, we build from there.",
+      back: "Back to gallery",
+      mail: "Direct email",
+    }
+  : {
+      eyebrow: "D3.14 · 咨询入口",
+      title: "先从一次高信号产品对话开始。",
+      body: "不接数据库，不做复杂表单，不先造漏斗。选择最接近的方向，生成一封聚焦邮件；如果信号足够强，再继续构建。",
+      back: "回到产品橱窗",
+      mail: "直接发邮件",
+    };
+const options = locale === "en"
+  ? [
+      {
+        label: "Product Diagnosis",
+        title: "Clarify a product that is powerful but hard to explain.",
+        body: "I want a product diagnosis for an AI / technical product. The current problem is: ",
+        accent: "from-[#05070A] via-[#007AFF] to-[#55C7FF]",
+      },
+      {
+        label: "Knowledge / Agent System",
+        title: "Design a second brain, RAG workflow, or agent cockpit.",
+        body: "I want to discuss a knowledge or agent system. The workflow I want to improve is: ",
+        accent: "from-[#071A2E] via-[#007AFF] to-[#FF6B35]",
+      },
+      {
+        label: "Website / Product Page",
+        title: "Turn a complex capability into a premium public storefront.",
+        body: "I want to improve a website or product page. The product should communicate: ",
+        accent: "from-[#111318] via-[#FF6B35] to-[#55C7FF]",
+      },
+    ]
+  : [
+      {
+        label: "产品诊断",
+        title: "把强但难讲清的 AI / 技术产品重新定焦。",
+        body: "我想做一次 AI / 技术产品诊断。目前最卡的问题是：",
+        accent: "from-[#05070A] via-[#007AFF] to-[#55C7FF]",
+      },
+      {
+        label: "知识库 / Agent 系统",
+        title: "设计第二大脑、RAG 工作流或 AI 桌面控制舱。",
+        body: "我想聊知识库或 Agent 系统。我想优化的工作流是：",
+        accent: "from-[#071A2E] via-[#007AFF] to-[#FF6B35]",
+      },
+      {
+        label: "网站 / 产品页改造",
+        title: "把复杂能力做成高级、清晰、可转化的公开入口。",
+        body: "我想改造网站或产品页。这个产品最需要传达的是：",
+        accent: "from-[#111318] via-[#FF6B35] to-[#55C7FF]",
+      },
+    ];
+
+function mailHref(option: (typeof options)[number]) {
+  const subject = locale === "en" ? `Void Architect inquiry · ${option.label}` : `Void Architect 咨询 · ${option.label}`;
+  const body = `${option.body}\n\n${locale === "en" ? "Context:" : "背景："}\n${locale === "en" ? "Expected outcome:" : "希望结果："}\n${locale === "en" ? "Timeline:" : "时间节奏："}`;
+  return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+---
+
+<Layout title={title} description={description} lang={locale === "en" ? "en" : "zh-CN"} canonicalPath={`${basePath}/contact`} ogImage="/images/projects/voidarchitect-site/cover.svg">
+  <main class="relative min-h-screen overflow-hidden px-5 py-6 text-void-ink md:px-8">
+    <div class="pointer-events-none absolute left-[-12rem] top-16 h-[34rem] w-[34rem] rounded-full bg-[#007AFF]/18 blur-3xl" />
+    <div class="pointer-events-none absolute right-[-14rem] top-28 h-[40rem] w-[40rem] rounded-full bg-[#FF6B35]/14 blur-3xl" />
+    <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[70vh] bg-[linear-gradient(180deg,#ffffff_0%,rgba(255,255,255,0.76)_46%,rgba(247,248,250,0)_100%)]" />
+
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-white/80 bg-white/70 px-3 py-3 shadow-[0_18px_70px_rgba(28,39,58,0.1)] backdrop-blur-2xl md:px-4">
+      <a href={`${basePath}/#projects`} class="rounded-full bg-void-ink px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white transition hover:bg-void-accent">
+        ← {intro.back}
+      </a>
+      <a href={basePath || "/"} class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute transition hover:text-void-ink">
+        Void Architect
+      </a>
+    </nav>
+
+    <section class="mx-auto grid max-w-7xl items-end gap-10 py-16 md:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.48fr)] md:py-24">
+      <div>
+        <p class="mb-6 w-fit rounded-full border border-white/80 bg-white/72 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-void-accent shadow-[0_14px_42px_rgba(0,122,255,0.08)] backdrop-blur-xl">
+          {intro.eyebrow}
+        </p>
+        <h1 class="text-display text-[4.7rem] leading-[0.82] text-void-ink text-glow md:text-[9rem]">
+          Contact<br />Void
+        </h1>
+        <p class="mt-8 max-w-3xl text-2xl font-semibold leading-[1.12] tracking-[-0.045em] text-void-ink md:text-5xl">
+          {intro.title}
+        </p>
+        <p class="mt-7 max-w-2xl text-base leading-8 text-void-ink/64 md:text-lg">
+          {intro.body}
+        </p>
+      </div>
+
+      <aside class="spatial-panel rounded-[2.5rem] border border-white/80 p-7 shadow-[0_34px_110px_rgba(28,39,58,0.12)] md:p-8">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute">{intro.mail}</p>
+        <a href={`mailto:${contactEmail}`} class="mt-5 block break-all text-3xl font-bold tracking-[-0.05em] text-void-ink transition hover:text-void-accent">
+          {contactEmail}
+        </a>
+        <p class="mt-6 text-sm leading-7 text-void-ink/58">
+          {locale === "en" ? "The fastest route is still a precise email with context, goal, and timeline." : "最快路径仍然是一封包含背景、目标和时间节奏的精确邮件。"}
+        </p>
+      </aside>
+    </section>
+
+    <section class="mx-auto grid max-w-7xl gap-5 pb-24 md:grid-cols-3">
+      {options.map((option) => (
+        <a href={mailHref(option)} class="group overflow-hidden rounded-[2.35rem] border border-white/80 bg-white/70 p-4 shadow-[0_30px_100px_rgba(28,39,58,0.11)] backdrop-blur-2xl transition hover:-translate-y-1 hover:bg-white/86">
+          <div class={`relative h-56 overflow-hidden rounded-[1.75rem] bg-gradient-to-br ${option.accent}`}>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.42),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(5,7,10,0.18)_100%)]" />
+            <div class="absolute left-5 right-5 top-5 flex items-center justify-between rounded-full border border-white/28 bg-white/18 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur-2xl">
+              <span>{option.label}</span>
+              <span>MAIL</span>
+            </div>
+            <div class="absolute bottom-6 left-6 right-6 rounded-[1.35rem] border border-white/34 bg-white/24 p-4 text-white shadow-[0_20px_60px_rgba(5,7,10,0.16)] backdrop-blur-2xl">
+              <p class="text-2xl font-bold tracking-[-0.05em]">{option.label}</p>
+            </div>
+          </div>
+          <p class="mt-5 text-2xl font-bold leading-tight tracking-[-0.05em] text-void-ink transition group-hover:text-void-accent">{option.title}</p>
+          <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-void-mute">{locale === "en" ? "Open pre-filled email →" : "打开预填邮件 →"}</p>
+        </a>
+      ))}
+    </section>
+  </main>
+</Layout>
