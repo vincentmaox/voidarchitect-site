@@ -1,6 +1,7 @@
 ---
 import type { PublicProject } from "../lib/registry";
 import type { Dict } from "../i18n/zh";
+import { productSlug } from "../lib/product-details";
 
 interface Props {
   p: PublicProject;
@@ -48,6 +49,8 @@ const desc = p.description?.trim() || dict.projects.fallbackDescription;
 const initials = p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "VA";
 const productLabel = p.product_label?.trim() || "Independent App";
 const coverImage = p.cover_image?.trim();
+const slug = productSlug(p);
+const detailHref = slug ? `/projects/${slug}` : null;
 const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 ---
 
@@ -57,9 +60,11 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
     sizeCls,
   ]}
 >
-  <div
+  <a
+    href={detailHref ?? p.github_url ?? "#"}
+    aria-label={`Open ${p.name} product page`}
     class:list={[
-      "relative mx-4 mt-4 shrink-0 overflow-hidden rounded-[1.55rem] border border-white/70 bg-gradient-to-br shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_26px_70px_rgba(28,39,58,0.13)]",
+      "relative mx-4 mt-4 block shrink-0 overflow-hidden rounded-[1.55rem] border border-white/70 bg-gradient-to-br shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_26px_70px_rgba(28,39,58,0.13)]",
       gradientCls,
       big ? "h-56 md:h-80" : "h-40",
     ]}
@@ -85,7 +90,7 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
         </div>
       </div>
     </div>
-  </div>
+  </a>
 
   <div class="relative z-10 flex flex-1 flex-col gap-4 p-5 md:p-6" class:list={big ? "md:p-8" : ""}>
     <div class="flex flex-wrap items-center gap-2">
@@ -133,16 +138,26 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
           <span class="text-void-mute/40">—</span>
         )}
       </div>
-      {p.github_url && (
-        <a
-          href={p.github_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="shrink-0 rounded-full border border-void-border/70 bg-white/70 px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-void-ink/62 transition hover:border-void-ink hover:bg-void-ink hover:text-white"
-        >
-          {dict.projects.repoLabel} ↗
-        </a>
-      )}
+      <div class="flex shrink-0 items-center gap-2">
+        {detailHref && (
+          <a
+            href={detailHref}
+            class="rounded-full bg-void-ink px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-white transition hover:bg-void-accent"
+          >
+            Product →
+          </a>
+        )}
+        {p.github_url && (
+          <a
+            href={p.github_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-full border border-void-border/70 bg-white/70 px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-void-ink/62 transition hover:border-void-ink hover:bg-void-ink hover:text-white"
+          >
+            {dict.projects.repoLabel} ↗
+          </a>
+        )}
+      </div>
     </div>
   </div>
 </article>

@@ -1,0 +1,197 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { zh } from "../../i18n/zh";
+import { loadRegistry } from "../../lib/registry";
+import { FEATURED_PRODUCT_SLUGS, PRODUCT_DETAILS, isFeaturedProductSlug, productSlug } from "../../lib/product-details";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug || !isFeaturedProductSlug(slug)) {
+  return Astro.redirect("/", 302);
+}
+
+const registry = await loadRegistry();
+const project = registry.projects.find((p) => productSlug(p) === slug && p.featured);
+const detail = PRODUCT_DETAILS[slug];
+
+if (!project) {
+  return Astro.redirect("/", 302);
+}
+
+const related = registry.projects
+  .filter((p) => p.featured && productSlug(p) && productSlug(p) !== slug)
+  .sort((a, b) => (a.showcase_rank ?? 999) - (b.showcase_rank ?? 999))
+  .slice(0, 4);
+
+const accentClass = {
+  blue: "from-void-accent via-void-accent2 to-[#9ad8ff]",
+  orange: "from-void-hot via-[#ffb75e] to-[#ffd89a]",
+  ink: "from-void-ink via-[#223047] to-void-accent",
+}[detail.accent];
+
+const haloClass = {
+  blue: "bg-void-accent/18",
+  orange: "bg-void-hot/18",
+  ink: "bg-void-ink/12",
+}[detail.accent];
+
+const coverImage = project.cover_image?.trim();
+const productLabel = project.product_label?.trim() || detail.projectName;
+const stageText = zh.projects.stageLabels[project.stage] ?? project.stage;
+const title = `${detail.projectName} — ${productLabel} | Void Architect`;
+const description = detail.subhead;
+---
+
+<Layout title={title} description={description} lang="zh-CN">
+  <main class="relative min-h-screen overflow-hidden px-5 py-6 text-void-ink md:px-8">
+    <div class={`pointer-events-none absolute left-[-10rem] top-24 h-[34rem] w-[34rem] rounded-full blur-3xl ${haloClass}`} />
+    <div class="pointer-events-none absolute right-[-12rem] top-8 h-[42rem] w-[42rem] rounded-full bg-void-hot/10 blur-3xl" />
+    <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[62vh] bg-[linear-gradient(180deg,#ffffff_0%,rgba(255,255,255,0.72)_46%,rgba(247,248,250,0)_100%)]" />
+
+    <nav class="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-white/80 bg-white/70 px-3 py-3 shadow-[0_18px_70px_rgba(28,39,58,0.1)] backdrop-blur-2xl md:px-4">
+      <a href="/#projects" class="rounded-full bg-void-ink px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white transition hover:bg-void-accent">
+        ← Products
+      </a>
+      <a href="/" class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute transition hover:text-void-ink">
+        Void Architect
+      </a>
+    </nav>
+
+    <section class="mx-auto grid max-w-7xl items-center gap-10 py-16 md:grid-cols-[minmax(0,0.92fr)_minmax(360px,0.72fr)] md:py-24">
+      <div>
+        <div class="mb-7 flex flex-wrap items-center gap-2">
+          <span class="rounded-full border border-white/80 bg-white/72 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-void-accent shadow-[0_14px_42px_rgba(0,122,255,0.08)] backdrop-blur-xl">
+            {productLabel}
+          </span>
+          <span class="rounded-full border border-void-border/70 bg-white/58 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-void-ink/58 backdrop-blur-xl">
+            {stageText}
+          </span>
+          {project.freq_total !== null && project.freq_total !== undefined && (
+            <span class="rounded-full border border-void-border/70 bg-white/58 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-void-ink/58 backdrop-blur-xl">
+              三频 {project.freq_total}
+            </span>
+          )}
+        </div>
+
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[0.28em] text-void-mute">
+          Featured Product · D3.2 App Page
+        </p>
+        <h1 class="text-display text-[4.5rem] text-void-ink text-glow md:text-[8.5rem]">
+          {detail.projectName}
+        </h1>
+        <p class="mt-8 max-w-3xl text-2xl font-semibold leading-[1.12] tracking-[-0.045em] text-void-ink md:text-5xl">
+          {detail.headline}
+        </p>
+        <p class="mt-7 max-w-2xl text-base leading-8 text-void-ink/64 md:text-lg">
+          {detail.subhead}
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          {project.github_url && (
+            <a href={project.github_url} target="_blank" rel="noopener noreferrer" class="rounded-full bg-void-ink px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white shadow-[0_18px_54px_rgba(5,7,10,0.18)] transition hover:-translate-y-0.5 hover:bg-void-accent">
+              GitHub ↗
+            </a>
+          )}
+          <a href="/#projects" class="rounded-full border border-void-border/80 bg-white/70 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-void-ink/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-void-ink hover:text-void-ink">
+            Back to Gallery
+          </a>
+        </div>
+      </div>
+
+      <div class="gradient-border relative rounded-[3rem] p-3">
+        <div class={`absolute inset-8 rounded-[3rem] bg-gradient-to-br ${accentClass} opacity-30 blur-3xl`} />
+        <div class="relative overflow-hidden rounded-[2.5rem] border border-white/82 bg-white/72 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_48px_140px_rgba(28,39,58,0.2)] backdrop-blur-2xl">
+          <div class={`relative h-[24rem] overflow-hidden rounded-[2rem] bg-gradient-to-br ${accentClass} md:h-[34rem]`}>
+            {coverImage ? (
+              <img src={coverImage} alt={`${detail.projectName} product cover`} class="absolute inset-0 h-full w-full object-cover" decoding="async" />
+            ) : (
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.72),transparent_30%),radial-gradient(circle_at_80%_76%,rgba(255,255,255,0.32),transparent_34%)]" />
+            )}
+            <div class="absolute inset-x-5 bottom-5 rounded-[1.5rem] border border-white/46 bg-white/26 p-4 text-white shadow-[0_20px_70px_rgba(5,7,10,0.16)] backdrop-blur-2xl">
+              <p class="font-mono text-[10px] uppercase tracking-[0.22em] opacity-78">Interface Preview</p>
+              <p class="mt-2 text-2xl font-bold tracking-[-0.05em] drop-shadow-[0_2px_12px_rgba(5,7,10,0.2)]">{productLabel}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto grid max-w-7xl gap-5 pb-20 md:grid-cols-3">
+      <article class="spatial-panel rounded-[2.25rem] border border-white/80 p-7 md:col-span-2 md:p-9">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-accent">Use Scenario</p>
+        <h2 class="mt-5 text-4xl font-bold tracking-[-0.06em] text-void-ink md:text-6xl">它解决什么场景</h2>
+        <p class="mt-6 text-lg leading-9 text-void-ink/64">{detail.scenario}</p>
+      </article>
+      <article class="rounded-[2.25rem] border border-white/80 bg-void-ink p-7 text-white shadow-[0_34px_100px_rgba(5,7,10,0.18)] md:p-9">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-white/54">Product Promise</p>
+        <p class="mt-8 text-3xl font-bold leading-[1.05] tracking-[-0.055em] md:text-4xl">{detail.promise}</p>
+      </article>
+    </section>
+
+    <section class="mx-auto grid max-w-7xl gap-5 pb-20 md:grid-cols-3">
+      <div class="rounded-[2.25rem] border border-white/80 bg-white/66 p-7 shadow-[0_24px_80px_rgba(28,39,58,0.1)] backdrop-blur-2xl md:p-8">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-accent">Core Interface</p>
+        <div class="mt-7 space-y-3">
+          {detail.interfaceNotes.map((item, index) => (
+            <div class="flex items-center gap-3 rounded-2xl border border-void-border/60 bg-white/72 p-4">
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-void-ash font-mono text-[10px] text-void-ink/58">{index + 1}</span>
+              <span class="font-semibold tracking-[-0.02em] text-void-ink/78">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="rounded-[2.25rem] border border-white/80 bg-white/66 p-7 shadow-[0_24px_80px_rgba(28,39,58,0.1)] backdrop-blur-2xl md:p-8">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-hot">Product Signals</p>
+        <div class="mt-7 space-y-3">
+          {detail.productSignals.map((item) => (
+            <div class="rounded-2xl border border-void-border/60 bg-white/72 p-4 font-semibold tracking-[-0.02em] text-void-ink/78">
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="rounded-[2.25rem] border border-white/80 bg-white/66 p-7 shadow-[0_24px_80px_rgba(28,39,58,0.1)] backdrop-blur-2xl md:p-8">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute">Roadmap</p>
+        <div class="mt-7 space-y-3">
+          {detail.roadmap.map((item) => (
+            <div class="rounded-2xl border border-void-border/60 bg-white/72 p-4 font-semibold tracking-[-0.02em] text-void-ink/78">
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl pb-24">
+      <div class="mb-7 flex items-end justify-between gap-4">
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute">More Selected Products</p>
+          <h2 class="mt-3 text-4xl font-bold tracking-[-0.06em] text-void-ink md:text-6xl">继续逛产品橱窗</h2>
+        </div>
+        <span class="hidden rounded-full border border-void-border/70 bg-white/68 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-void-ink/54 md:inline-flex">
+          {FEATURED_PRODUCT_SLUGS.length} curated apps
+        </span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-4">
+        {related.map((item) => {
+          const itemSlug = productSlug(item);
+          if (!itemSlug) return null;
+          return (
+            <a href={`/projects/${itemSlug}`} class="group overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/68 p-3 shadow-[0_20px_70px_rgba(28,39,58,0.09)] backdrop-blur-2xl transition hover:-translate-y-1 hover:bg-white/86">
+              <div class="relative h-32 overflow-hidden rounded-[1.25rem] bg-void-ash">
+                {item.cover_image && <img src={item.cover_image} alt={`${item.name} cover`} class="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />}
+                <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0)_0%,rgba(5,7,10,0.42)_100%)]" />
+              </div>
+              <p class="mt-4 font-mono text-[9px] uppercase tracking-[0.18em] text-void-mute">{item.product_label}</p>
+              <p class="mt-1 text-xl font-bold tracking-[-0.05em] text-void-ink transition group-hover:text-void-accent">{item.name}</p>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+</Layout>
