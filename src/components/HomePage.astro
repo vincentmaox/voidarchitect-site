@@ -12,68 +12,91 @@ const { dict, lang } = Astro.props;
 ---
 
 <Layout title={dict.meta.title} description={dict.meta.description} lang={lang}>
-  <main class="relative min-h-screen">
-    <!-- Hero: 全屏流体背景 + 文字叠加 -->
-    <section class="relative min-h-screen flex flex-col justify-between overflow-hidden">
+  <main class="relative min-h-screen text-void-fg">
+    <section class="relative min-h-screen overflow-hidden px-5 py-5 md:px-8 md:py-8">
       <FluidHero client:only="react" />
 
-      <!-- 缓慢移动的渐变发光球 -->
       <div class="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
-        <div class="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
-          style="background: radial-gradient(circle, #00D4FF, transparent 70%); top: 10%; left: 60%; animation: orbFloat1 20s ease-in-out infinite;"
+        <div class="absolute -top-32 left-[52%] h-[760px] w-[760px] rounded-full opacity-30 blur-[100px]"
+          style="background: radial-gradient(circle, rgba(0,122,255,0.42), transparent 66%); animation: orbFloat1 22s ease-in-out infinite;"
         />
-        <div class="absolute w-[400px] h-[400px] rounded-full opacity-15 blur-[100px]"
-          style="background: radial-gradient(circle, #FF6B35, transparent 70%); top: 50%; left: 10%; animation: orbFloat2 25s ease-in-out infinite;"
+        <div class="absolute top-[34%] -left-36 h-[520px] w-[520px] rounded-full opacity-25 blur-[96px]"
+          style="background: radial-gradient(circle, rgba(255,107,53,0.32), transparent 68%); animation: orbFloat2 28s ease-in-out infinite;"
         />
-        <div class="absolute w-[500px] h-[500px] rounded-full opacity-10 blur-[90px]"
-          style="background: radial-gradient(circle, #3B82F6, transparent 70%); top: 70%; left: 50%; animation: orbFloat3 18s ease-in-out infinite;"
+        <div class="absolute bottom-[-16%] left-[42%] h-[620px] w-[620px] rounded-full opacity-20 blur-[120px]"
+          style="background: radial-gradient(circle, rgba(17,19,24,0.22), transparent 70%); animation: orbFloat3 20s ease-in-out infinite;"
         />
       </div>
 
-      <!-- 渐变遮罩——让文字可读 -->
-      <div class="absolute inset-0 bg-gradient-to-b from-void-bg/40 via-transparent to-void-bg/90 pointer-events-none z-[2]" />
+      <div class="absolute inset-x-5 top-5 bottom-5 md:inset-x-8 md:top-8 md:bottom-8 rounded-[2rem] md:rounded-[3rem] border border-white/70 bg-white/34 shadow-[0_50px_160px_rgba(38,54,80,0.14)] pointer-events-none z-[2]" />
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.48)_0%,rgba(255,255,255,0.16)_42%,rgba(247,248,250,0.76)_100%)] pointer-events-none z-[3]" />
 
-      <header class="relative z-10 flex justify-between items-center p-6 md:p-10 text-sm font-mono uppercase tracking-widest text-void-mute">
-        <span class="text-void-fg/80">{dict.nav.studio}</span>
-        <span class="hidden md:inline">{dict.nav.person}</span>
-        <div class="flex items-center gap-4">
-          <a href={dict.langSwitch.otherHref} class="hover:text-void-accent transition" aria-label="switch language">
+      <header class="relative z-10 mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/70 bg-white/62 px-4 py-3 text-[11px] font-mono uppercase tracking-[0.18em] text-void-mute shadow-[0_18px_70px_rgba(28,39,58,0.10)] backdrop-blur-2xl md:px-6">
+        <span class="font-semibold text-void-ink">{dict.nav.studio}</span>
+        <span class="hidden text-void-mute/85 md:inline">{dict.nav.person}</span>
+        <div class="flex items-center gap-3">
+          <a href={dict.langSwitch.otherHref} class="rounded-full px-3 py-1.5 transition hover:bg-void-ink hover:text-white" aria-label="switch language">
             {dict.langSwitch.other}
           </a>
-          <a href={`mailto:${dict.nav.contact}`} class="hover:text-void-accent transition hidden sm:inline">
+          <a href={`mailto:${dict.nav.contact}`} class="hidden rounded-full bg-void-ink px-3 py-1.5 text-white shadow-[0_10px_30px_rgba(5,7,10,0.18)] transition hover:bg-void-accent sm:inline">
             {dict.nav.contact}
           </a>
         </div>
       </header>
 
-      <div class="relative z-10 flex flex-col gap-8 max-w-5xl px-6 md:px-10 py-8">
-        <p class="font-mono text-xs uppercase tracking-[0.3em] text-void-accent/60">
-          {dict.hero.eyebrow}
-        </p>
-        <h1 class="text-display text-[clamp(4rem,13vw,14rem)] text-void-fg text-glow">
-          {dict.hero.title1}<br />
-          <span class="text-void-accent">{dict.hero.title2}</span>
-        </h1>
-        <p class="max-w-2xl text-lg md:text-2xl text-void-fg/80 leading-relaxed font-light">
-          {dict.hero.body.map((line, i) => (
-            <>{line}{i < dict.hero.body.length - 1 && <br />}</>
-          ))}
-        </p>
-      </div>
+      <div class="relative z-10 mx-auto grid min-h-[calc(100vh-8rem)] max-w-7xl items-center gap-10 py-12 md:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.66fr)] md:py-0">
+        <div class="flex flex-col gap-7">
+          <p class="w-fit rounded-full border border-white/70 bg-white/64 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.26em] text-void-accent shadow-[0_16px_55px_rgba(0,122,255,0.11)] backdrop-blur-2xl">
+            {dict.hero.eyebrow}
+          </p>
+          <h1 class="text-display text-[clamp(4.2rem,12.5vw,13rem)] text-void-ink text-glow">
+            {dict.hero.title1}<br />
+            <span class="bg-gradient-to-r from-void-accent via-[#2f9dff] to-void-hot bg-clip-text text-transparent">{dict.hero.title2}</span>
+          </h1>
+          <p class="max-w-2xl text-xl font-medium leading-relaxed text-void-ink/72 md:text-2xl">
+            {dict.hero.body.map((line, i) => (
+              <>{line}{i < dict.hero.body.length - 1 && <br />}</>
+            ))}
+          </p>
+          <div class="flex flex-wrap items-center gap-3 pt-3">
+            <a href="#projects" class="group inline-flex items-center gap-3 rounded-full bg-void-ink px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_55px_rgba(5,7,10,0.2)] transition hover:-translate-y-0.5 hover:bg-void-accent">
+              {dict.hero.scroll}
+              <span class="grid h-6 w-6 place-items-center rounded-full bg-white/14 text-xs transition group-hover:bg-white/24">↓</span>
+            </a>
+            <span class="rounded-full border border-white/70 bg-white/58 px-5 py-3 font-mono text-xs uppercase tracking-[0.18em] text-void-mute backdrop-blur-2xl">{dict.hero.location}</span>
+          </div>
+        </div>
 
-      <footer class="relative z-10 flex justify-between items-end p-6 md:p-10 font-mono text-xs uppercase tracking-widest text-void-mute">
-        <a href="#projects" class="hover:text-void-accent transition flex items-center gap-2 group">
-          <span class="group-hover:text-void-accent">{dict.hero.scroll}</span>
-          <span class="inline-block w-5 h-5 rounded-full border border-void-accent/40 group-hover:border-void-accent group-hover:bg-void-accent/10 flex items-center justify-center text-void-accent text-[10px]">↓</span>
-        </a>
-        <span class="hidden md:block">{dict.hero.location}</span>
-      </footer>
+        <aside class="spatial-panel gradient-border relative hidden min-h-[560px] overflow-hidden rounded-[2.5rem] p-5 md:block">
+          <div class="absolute inset-0 opacity-60" style="background-image: linear-gradient(rgba(17,19,24,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(17,19,24,0.045) 1px, transparent 1px); background-size: 44px 44px;" />
+          <div class="relative flex h-full flex-col justify-between rounded-[2rem] border border-white/70 bg-white/54 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-2xl">
+            <div class="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.24em] text-void-mute">
+              <span>Spatial OS</span>
+              <span>Live</span>
+            </div>
+            <div class="space-y-4">
+              <div class="ml-auto h-36 w-36 rounded-[2rem] bg-gradient-to-br from-void-accent to-void-accent2 shadow-[0_28px_80px_rgba(0,122,255,0.32)]" />
+              <div class="h-44 rounded-[2.25rem] bg-void-ink p-5 text-white shadow-[0_36px_95px_rgba(5,7,10,0.28)]">
+                <div class="mb-12 h-2 w-16 rounded-full bg-white/24" />
+                <p class="text-3xl font-bold tracking-[-0.04em]">Ideas become instruments.</p>
+              </div>
+              <div class="mr-auto h-28 w-52 rounded-[2rem] bg-gradient-to-br from-white to-[#edf3fb] shadow-[0_26px_80px_rgba(28,39,58,0.14)]">
+                <div class="h-full rounded-[2rem] border border-white/80 bg-[radial-gradient(circle_at_24%_28%,rgba(255,107,53,0.34),transparent_34%),radial-gradient(circle_at_70%_64%,rgba(0,122,255,0.24),transparent_38%)]" />
+              </div>
+            </div>
+            <div class="flex items-end justify-between border-t border-void-border/50 pt-5">
+              <p class="max-w-[12rem] text-sm font-medium leading-snug text-void-ink/70">A bright void: precise, warm, alive.</p>
+              <div class="h-12 w-12 rounded-2xl bg-void-hot shadow-[0_18px_45px_rgba(255,107,53,0.32)]" />
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
     <ProjectGrid dict={dict} />
 
-    <footer class="relative py-10 px-6 md:px-16">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4 font-mono text-xs uppercase tracking-widest text-void-mute">
+    <footer class="relative px-6 py-10 md:px-16">
+      <div class="mx-auto flex max-w-7xl flex-col justify-between gap-4 border-t border-void-border/70 pt-8 font-mono text-xs uppercase tracking-widest text-void-mute md:flex-row">
         <span>{dict.footer.rights}</span>
         <div class="flex gap-6">
           <a href={`mailto:${dict.nav.contact}`} class="hover:text-void-accent transition">
@@ -85,9 +108,8 @@ const { dict, lang } = Astro.props;
     </footer>
   </main>
 
-  <!-- 鼠标跟随光晕 -->
   <div id="cursor-glow" class="fixed pointer-events-none z-40 hidden md:block"
-    style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.12), transparent 70%); transform: translate(-50%, -50%); transition: transform 0.15s ease-out;"
+    style="width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle, rgba(0,122,255,0.16), rgba(255,107,53,0.08) 36%, transparent 70%); transform: translate(-50%, -50%); transition: transform 0.15s ease-out; mix-blend-mode: multiply;"
   />
 
   <script is:inline>

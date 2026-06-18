@@ -66,26 +66,25 @@ const fragmentShader = /* glsl */ `
     float n2 = fbm(q + vec3(n1) * 0.6 + vec3(0.0, 0.0, 1.7));
     float n3 = fbm(q + vec3(n2) * 0.4 + vec3(2.0, 1.0, 0.0));
 
-    // 电光青 / 炽热橙 / 深海蓝 三色调
-    vec3 c0 = vec3(0.05, 0.07, 0.12);  // 深底
-    vec3 c1 = vec3(0.00, 0.83, 1.00);  // #00D4FF 电光青
-    vec3 c2 = vec3(1.00, 0.42, 0.21);  // #FF6B35 炽热橙
-    vec3 c3 = vec3(0.04, 0.12, 0.25);  // 深海蓝
+    vec3 c0 = vec3(0.965, 0.976, 0.992);
+    vec3 c1 = vec3(0.00, 0.48, 1.00);
+    vec3 c2 = vec3(1.00, 0.42, 0.21);
+    vec3 c3 = vec3(0.035, 0.045, 0.065);
 
-    vec3 col = mix(c0, c3, smoothstep(-0.4, 0.6, n1));
-    col = mix(col, c1, smoothstep(0.50, 0.95, n2) * 0.50);
-    col = mix(col, c2, smoothstep(0.60, 0.98, n3) * 0.35);
+    vec3 col = mix(c0, vec3(0.88, 0.93, 1.0), smoothstep(-0.5, 0.7, n1));
+    col = mix(col, c1, smoothstep(0.56, 0.98, n2) * 0.24);
+    col = mix(col, c2, smoothstep(0.68, 1.0, n3) * 0.18);
+    col = mix(col, c3, smoothstep(0.72, 1.1, length(p)) * 0.18);
 
-    // 鼠标周围加亮
-    col += exp(-md * 2.0) * 0.25 * c1;
+    col += exp(-md * 2.4) * 0.16 * c1;
+    col += exp(-md * 4.4) * 0.10 * c2;
 
     // 颗粒
     float grain = fract(sin(dot(uv * uResolution, vec2(12.9898, 78.233))) * 43758.5453);
     col += (grain - 0.5) * 0.015;
 
-    // vignette
-    float vig = smoothstep(1.5, 0.3, length(p));
-    col *= vig;
+    float bloom = smoothstep(0.85, 0.1, length(p - vec2(0.18, 0.06)));
+    col += bloom * vec3(0.06, 0.08, 0.11);
 
     gl_FragColor = vec4(col, 1.0);
   }

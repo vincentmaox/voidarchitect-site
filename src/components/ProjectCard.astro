@@ -9,134 +9,116 @@ interface Props {
 }
 const { p, dict, big = false } = Astro.props;
 
-function stageColor(stage: string): string {
-  switch (stage) {
-    case "All-in":
-      return "border-void-accent/40";
-    case "活跃":
-      return "border-sky-400/30";
-    case "野化":
-      return "border-fuchsia-400/30";
-    case "Watch":
-      return "border-blue-400/30";
-    case "停滞":
-      return "border-slate-500/20";
-    case "已归档":
-    case "Kill":
-      return "border-slate-700/20 opacity-50";
-    default:
-      return "border-void-border/30";
-  }
-}
-
 function stageBadge(stage: string): string {
   switch (stage) {
     case "All-in":
-      return "bg-void-accent/15 text-void-accent border-void-accent/30";
+      return "bg-void-ink text-white border-void-ink";
     case "活跃":
-      return "bg-sky-400/10 text-sky-400 border-sky-400/20";
+      return "bg-void-accent/10 text-void-accent border-void-accent/20";
     case "野化":
-      return "bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/20";
+      return "bg-void-hot/10 text-void-hot border-void-hot/20";
     case "Watch":
-      return "bg-blue-400/10 text-blue-400 border-blue-400/20";
+      return "bg-[#eef5ff] text-[#2563eb] border-[#bfdbfe]";
     case "停滞":
-      return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+      return "bg-void-ash text-void-mute border-void-border/70";
     default:
-      return "bg-slate-700/10 text-slate-500 border-slate-700/20";
+      return "bg-void-ash text-void-mute border-void-border/60";
   }
 }
 
-const colorCls = stageColor(p.stage);
+function appGradient(stage: string): string {
+  switch (stage) {
+    case "All-in":
+      return "from-void-ink via-[#143766] to-void-accent";
+    case "活跃":
+      return "from-[#eaf5ff] via-void-accent2 to-void-accent";
+    case "野化":
+      return "from-[#fff1e9] via-void-hot to-[#ffb199]";
+    case "Watch":
+      return "from-[#f5f8ff] via-[#9fc8ff] to-[#2563eb]";
+    default:
+      return "from-[#f8fafc] via-[#e5e9f0] to-[#9aa4b2]";
+  }
+}
+
 const badgeCls = stageBadge(p.stage);
+const gradientCls = appGradient(p.stage);
 const stageText = dict.projects.stageLabels[p.stage] ?? p.stage;
 const desc = p.description?.trim() || dict.projects.fallbackDescription;
-const sizeCls = big
-  ? "md:col-span-2 lg:col-span-2 md:row-span-2"
-  : "";
+const initials = p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "VA";
+const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 ---
 
 <article
   class:list={[
-    "project-card relative rounded-2xl overflow-hidden flex flex-col",
-    colorCls,
+    "project-card gradient-border relative flex flex-col overflow-hidden rounded-[2rem] md:rounded-[2.35rem]",
     sizeCls,
   ]}
 >
-  <!-- 渐变顶部色带（图片占位区） -->
   <div
     class:list={[
-      "relative w-full overflow-hidden flex items-center justify-center shrink-0",
-      big ? "h-48 md:h-64" : "h-32",
+      "relative mx-4 mt-4 shrink-0 overflow-hidden rounded-[1.55rem] border border-white/70 bg-gradient-to-br shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_26px_70px_rgba(28,39,58,0.13)]",
+      gradientCls,
+      big ? "h-56 md:h-80" : "h-40",
     ]}
   >
-    <div class="absolute inset-0 bg-gradient-to-br from-void-accent/20 via-void-accent2/10 to-void-hot/10" />
-    <div class="absolute inset-0 opacity-30"
-      style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2300D4FF\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
-    />
-    <div class="relative z-10 font-mono font-bold text-void-accent/40"
-      class:list={big ? "text-5xl md:text-6xl" : "text-3xl md:text-4xl"}
-    >
-      {p.name.replace(/[^A-Za-z]/g, "").slice(0, 2).toUpperCase() || "⚡"}
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(255,255,255,0.72),transparent_28%),radial-gradient(circle_at_78%_70%,rgba(255,255,255,0.34),transparent_36%)]" />
+    <div class="absolute inset-x-5 bottom-5 rounded-[1.25rem] border border-white/45 bg-white/26 p-3 shadow-[0_18px_50px_rgba(5,7,10,0.12)] backdrop-blur-2xl">
+      <div class="flex items-center gap-3">
+        <div class="grid rounded-[1.05rem] bg-white/84 font-mono font-semibold text-void-ink shadow-[0_12px_30px_rgba(5,7,10,0.12)]"
+          class:list={big ? "h-16 w-16 place-items-center text-xl" : "h-12 w-12 place-items-center text-sm"}
+        >
+          {initials}
+        </div>
+        <div class="min-w-0 text-white drop-shadow-[0_1px_8px_rgba(5,7,10,0.28)]">
+          <p class="truncate font-semibold tracking-[-0.03em]" class:list={big ? "text-2xl" : "text-base"}>{p.name}</p>
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] opacity-80">Independent App</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 玻璃拟态内容区 -->
-  <div class="relative z-10 flex-1 flex flex-col gap-3 p-5 md:p-6"
-    class:list={big ? "md:p-8" : ""}
-  >
-    <div class="flex items-center gap-2">
-      <span class={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full font-mono text-[10px] uppercase tracking-wider border ${badgeCls}`}>
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-current" />
+  <div class="relative z-10 flex flex-1 flex-col gap-4 p-5 md:p-6" class:list={big ? "md:p-8" : ""}>
+    <div class="flex flex-wrap items-center gap-2">
+      <span class={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-wider ${badgeCls}`}>
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-current" />
         {stageText}
       </span>
       {p.freq_total !== null && p.freq_total !== undefined && (
-        <span class="font-mono text-[10px] text-void-accent/50">
+        <span class="rounded-full bg-void-ash px-3 py-1 font-mono text-[10px] text-void-ink/58">
           {dict.projects.freqLabel} {p.freq_total}
         </span>
       )}
     </div>
 
-    <h3
-      class:list={[
-        "font-mono text-void-fg leading-tight",
-        big ? "text-2xl md:text-3xl" : "text-lg md:text-xl",
-      ]}
-    >
+    <h3 class:list={["leading-[1.02] tracking-[-0.055em] text-void-ink", big ? "text-3xl font-bold md:text-5xl" : "text-2xl font-bold"]}>
       {p.name}
     </h3>
 
-    <p
-      class:list={[
-        "text-void-mute leading-relaxed",
-        big ? "text-sm md:text-base" : "text-xs md:text-sm",
-      ]}
-    >
+    <p class:list={["leading-relaxed text-void-ink/62", big ? "text-base md:text-lg" : "text-sm"]}>
       {desc}
     </p>
 
     {p.tech_stack.length > 0 && (
       <div class="flex flex-wrap gap-1.5">
-        {p.tech_stack.slice(0, 4).map((t) => (
-          <span class="font-mono text-[9px] px-2 py-0.5 rounded-full bg-void-surface/50 text-void-mute border border-void-border/40"
-          >
+        {p.tech_stack.slice(0, 5).map((t) => (
+          <span class="rounded-full border border-void-border/60 bg-white/68 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-void-mute shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]">
             {t}
           </span>
         ))}
       </div>
     )}
 
-    <div class="flex items-end justify-between gap-3 pt-2 mt-auto border-t border-void-border/30"
-    >
-      <div class="font-mono text-[10px] text-void-mute/70 leading-relaxed truncate min-w-0 flex-1"
-      >
+    <div class="mt-auto flex items-end justify-between gap-3 border-t border-void-border/60 pt-4">
+      <div class="min-w-0 flex-1 truncate font-mono text-[10px] leading-relaxed text-void-mute/80">
         {p.last_action ? (
           <>
-            <span class="text-void-accent/40">{dict.projects.lastActionLabel} · {p.last_action.date}</span>
+            <span class="text-void-accent">{dict.projects.lastActionLabel} · {p.last_action.date}</span>
             <br />
-            <span class="text-void-mute truncate block">{p.last_action.message}</span>
+            <span class="block truncate text-void-mute">{p.last_action.message}</span>
           </>
         ) : (
-          <span class="text-void-mute/30">—</span>
+          <span class="text-void-mute/40">—</span>
         )}
       </div>
       {p.github_url && (
@@ -144,7 +126,7 @@ const sizeCls = big
           href={p.github_url}
           target="_blank"
           rel="noopener noreferrer"
-          class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-void-mute hover:text-void-accent transition px-2.5 py-1 border border-void-border/50 rounded-lg hover:border-void-accent/50 hover:bg-void-accent/5"
+          class="shrink-0 rounded-full border border-void-border/70 bg-white/70 px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-void-ink/62 transition hover:border-void-ink hover:bg-void-ink hover:text-white"
         >
           {dict.projects.repoLabel} ↗
         </a>
@@ -155,15 +137,15 @@ const sizeCls = big
 
 <style>
   .project-card {
-    background: rgba(22, 27, 34, 0.5);
-    backdrop-filter: blur(20px) saturate(140%);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-      box-shadow 0.4s, border-color 0.4s;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(34px) saturate(175%);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.88), 0 28px 90px rgba(28, 39, 58, 0.12);
+    transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.55s, border-color 0.55s;
   }
   .project-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 212, 255, 0.06),
-                0 0 0 1px rgba(0, 212, 255, 0.15);
-    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 42px 120px rgba(28, 39, 58, 0.18), 0 18px 60px rgba(0, 122, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.95);
   }
 </style>
