@@ -17,8 +17,8 @@ export const en: Dict = {
     title2: "Architect",
     body: [
       "Working in the seam between the void and the real.",
-      "Building void structures with AI through frequency-domain thinking,",
-      "delivering asymmetric arbitrage and cross-world translation for clients.",
+      "Building AI product storefronts, personal knowledge systems, and agent workflows,",
+      "turning complex capability into interfaces people can understand and act on.",
     ],
     scroll: "See projects",
     location: "2026 · Shenzhen",
