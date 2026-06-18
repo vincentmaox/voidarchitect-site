@@ -1,0 +1,57 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#EEF6FF"/>
+      <stop offset="1" stop-color="#F7F8FA"/>
+    </linearGradient>
+    <linearGradient id="dark" x1="274" y1="226" x2="710" y2="730" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111318"/>
+      <stop offset="1" stop-color="#05070A"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="708" y1="240" x2="1180" y2="728" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#55C7FF"/>
+      <stop offset="0.52" stop-color="#007AFF"/>
+      <stop offset="1" stop-color="#143766"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1180 262) rotate(137) scale(520 430)">
+      <stop stop-color="#FF6B35" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="110" y="92" width="1380" height="828" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="44" stdDeviation="62" flood-color="#203044" flood-opacity="0.18"/>
+    </filter>
+    <filter id="glow" x="0" y="0" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="28" flood-color="#55C7FF" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#warm)"/>
+  <g filter="url(#shadow)">
+    <rect x="180" y="145" width="1240" height="710" rx="62" fill="white" fill-opacity="0.72"/>
+    <rect x="181" y="146" width="1238" height="708" rx="61" stroke="white" stroke-opacity="0.92" stroke-width="2"/>
+  </g>
+  <rect x="238" y="204" width="484" height="590" rx="46" fill="url(#dark)"/>
+  <text x="292" y="320" fill="white" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="76" font-weight="800" letter-spacing="-5">Hermes</text>
+  <text x="296" y="372" fill="white" fill-opacity="0.54" font-family="IBM Plex Mono, monospace" font-size="18" font-weight="600" letter-spacing="3">DESKTOP CONTROL CONSOLE</text>
+  <g filter="url(#glow)">
+    <path d="M302 548C354 464 428 464 480 548C532 632 606 632 658 548" stroke="#55C7FF" stroke-width="16" stroke-linecap="round"/>
+    <path d="M302 610C354 526 428 526 480 610C532 694 606 694 658 610" stroke="#FF6B35" stroke-width="10" stroke-linecap="round" opacity="0.78"/>
+  </g>
+  <rect x="294" y="702" width="152" height="18" rx="9" fill="white" fill-opacity="0.24"/>
+  <rect x="468" y="702" width="82" height="18" rx="9" fill="#55C7FF" fill-opacity="0.55"/>
+  <rect x="572" y="702" width="62" height="18" rx="9" fill="#FF6B35" fill-opacity="0.76"/>
+  <rect x="790" y="220" width="486" height="138" rx="36" fill="url(#blue)"/>
+  <rect x="836" y="270" width="240" height="18" rx="9" fill="white" fill-opacity="0.36"/>
+  <rect x="836" y="314" width="320" height="12" rx="6" fill="white" fill-opacity="0.24"/>
+  <rect x="790" y="410" width="486" height="138" rx="36" fill="white" fill-opacity="0.68"/>
+  <rect x="836" y="460" width="214" height="18" rx="9" fill="#05070A" fill-opacity="0.18"/>
+  <rect x="836" y="504" width="344" height="12" rx="6" fill="#007AFF" fill-opacity="0.26"/>
+  <rect x="790" y="600" width="486" height="138" rx="36" fill="white" fill-opacity="0.58"/>
+  <rect x="836" y="650" width="188" height="18" rx="9" fill="#05070A" fill-opacity="0.16"/>
+  <rect x="836" y="694" width="278" height="12" rx="6" fill="#FF6B35" fill-opacity="0.32"/>
+  <circle cx="1238" cy="288" r="16" fill="white" fill-opacity="0.84"/>
+  <circle cx="1238" cy="478" r="16" fill="#007AFF" fill-opacity="0.72"/>
+  <circle cx="1238" cy="668" r="16" fill="#FF6B35" fill-opacity="0.72"/>
+  <text x="790" y="800" fill="#6E7681" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="30" font-weight="700">Voice, state, agents — one cockpit.</text>
+</svg>

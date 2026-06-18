@@ -10,14 +10,12 @@ interface Props {
 const { dict } = Astro.props;
 
 const registry = await loadRegistry();
-const projects = registry.projects;
+const projects = registry.projects
+  .filter((p) => p.featured)
+  .sort((a, b) => (a.showcase_rank ?? 999) - (b.showcase_rank ?? 999));
 
-function isFeatured(p: PublicProject): boolean {
-  return p.stage === "All-in" || (p.freq_total ?? 0) >= 12;
-}
-
-const featured = projects.filter(isFeatured).slice(0, 2);
-const rest = projects.filter((p) => !featured.includes(p));
+const featured = projects.slice(0, 2);
+const rest = projects.slice(2);
 ---
 
 <section id="projects" class="relative overflow-hidden px-5 py-24 md:px-8 md:py-32">
