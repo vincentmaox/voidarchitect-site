@@ -9,6 +9,7 @@ interface Props {
   lang: "zh-CN" | "en";
 }
 const { dict, lang } = Astro.props;
+const locale = lang === "en" ? "en" : "zh";
 ---
 
 <Layout title={dict.meta.title} description={dict.meta.description} lang={lang}>
@@ -93,7 +94,7 @@ const { dict, lang } = Astro.props;
       </div>
     </section>
 
-    <ProjectGrid dict={dict} />
+    <ProjectGrid dict={dict} locale={locale} />
 
     <footer class="relative px-6 py-10 md:px-16">
       <div class="mx-auto flex max-w-7xl flex-col justify-between gap-4 border-t border-void-border/70 pt-8 font-mono text-xs uppercase tracking-widest text-void-mute md:flex-row">

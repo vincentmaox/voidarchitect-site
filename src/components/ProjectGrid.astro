@@ -6,8 +6,9 @@ import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
   dict: Dict;
+  locale?: "zh" | "en";
 }
-const { dict } = Astro.props;
+const { dict, locale = "zh" } = Astro.props;
 
 const registry = await loadRegistry();
 const projects = registry.projects
@@ -40,10 +41,10 @@ const rest = projects.slice(2);
     ) : (
       <div class="grid grid-cols-1 gap-5 auto-rows-[minmax(280px,auto)] md:grid-cols-3 md:gap-6 lg:grid-cols-4">
         {featured.map((p) => (
-          <ProjectCard p={p} dict={dict} big />
+          <ProjectCard p={p} dict={dict} locale={locale} big />
         ))}
         {rest.map((p) => (
-          <ProjectCard p={p} dict={dict} />
+          <ProjectCard p={p} dict={dict} locale={locale} />
         ))}
       </div>
     )}

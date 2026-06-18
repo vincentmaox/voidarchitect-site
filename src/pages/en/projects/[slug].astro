@@ -1,22 +1,22 @@
 ---
-import ProductDetailPage from "../../components/ProductDetailPage.astro";
-import { zh } from "../../i18n/zh";
-import { loadRegistry } from "../../lib/registry";
-import { isFeaturedProductSlug, productSlug } from "../../lib/product-details";
+import ProductDetailPage from "../../../components/ProductDetailPage.astro";
+import { en } from "../../../i18n/en";
+import { loadRegistry } from "../../../lib/registry";
+import { isFeaturedProductSlug, productSlug } from "../../../lib/product-details";
 
 export const prerender = false;
 
 const { slug } = Astro.params;
 
 if (!slug || !isFeaturedProductSlug(slug)) {
-  return Astro.redirect("/", 302);
+  return Astro.redirect("/en/", 302);
 }
 
 const registry = await loadRegistry();
 const project = registry.projects.find((p) => productSlug(p) === slug && p.featured);
 
 if (!project) {
-  return Astro.redirect("/", 302);
+  return Astro.redirect("/en/", 302);
 }
 
 const related = registry.projects
@@ -25,4 +25,4 @@ const related = registry.projects
   .slice(0, 4);
 ---
 
-<ProductDetailPage slug={slug} project={project} related={related} dict={zh} locale="zh" />
+<ProductDetailPage slug={slug} project={project} related={related} dict={en} locale="en" />
