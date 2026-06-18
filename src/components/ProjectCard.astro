@@ -46,6 +46,7 @@ const gradientCls = appGradient(p.stage);
 const stageText = dict.projects.stageLabels[p.stage] ?? p.stage;
 const desc = p.description?.trim() || dict.projects.fallbackDescription;
 const initials = p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "VA";
+const coverImage = p.cover_image?.trim();
 const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 ---
 
@@ -62,7 +63,14 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
       big ? "h-56 md:h-80" : "h-40",
     ]}
   >
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(255,255,255,0.72),transparent_28%),radial-gradient(circle_at_78%_70%,rgba(255,255,255,0.34),transparent_36%)]" />
+    {coverImage ? (
+      <>
+        <img src={coverImage} alt={`${p.name} cover`} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,10,0.04)_0%,rgba(5,7,10,0.12)_38%,rgba(5,7,10,0.48)_100%)]" />
+      </>
+    ) : (
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_25%_18%,rgba(255,255,255,0.72),transparent_28%),radial-gradient(circle_at_78%_70%,rgba(255,255,255,0.34),transparent_36%)]" />
+    )}
     <div class="absolute inset-x-5 bottom-5 rounded-[1.25rem] border border-white/45 bg-white/26 p-3 shadow-[0_18px_50px_rgba(5,7,10,0.12)] backdrop-blur-2xl">
       <div class="flex items-center gap-3">
         <div class="grid rounded-[1.05rem] bg-white/84 font-mono font-semibold text-void-ink shadow-[0_12px_30px_rgba(5,7,10,0.12)]"

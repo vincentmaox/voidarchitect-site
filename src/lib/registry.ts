@@ -18,6 +18,7 @@ export interface PublicProject {
   freq_suggestion: string | null;
   last_action: LastAction | null;
   github_url: string | null;
+  cover_image?: string | null;
   tech_stack: string[];
 }
 
