@@ -1,21 +1,21 @@
 <svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="70" y1="40" x2="1490" y2="960" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
       <stop stop-color="#FFFFFF"/>
       <stop offset="0.48" stop-color="#F0F6FF"/>
       <stop offset="1" stop-color="#F7F8FA"/>
     </linearGradient>
-    <linearGradient id="screen" x1="292" y1="218" x2="1236" y2="732" gradientUnits="userSpaceOnUse">
+    <linearGradient id="screen" x1="246" y1="216" x2="1110" y2="742" gradientUnits="userSpaceOnUse">
       <stop stop-color="#05070A"/>
       <stop offset="0.62" stop-color="#143766"/>
       <stop offset="1" stop-color="#007AFF"/>
     </linearGradient>
-    <radialGradient id="orange" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1064 668) rotate(152) scale(490 380)">
-      <stop stop-color="#FF6B35" stop-opacity="0.36"/>
+    <radialGradient id="orange" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1064 688) rotate(152) scale(500 390)">
+      <stop stop-color="#FF6B35" stop-opacity="0.34"/>
       <stop offset="1" stop-color="#FF6B35" stop-opacity="0"/>
     </radialGradient>
-    <filter id="shadow" x="120" y="120" width="1360" height="800" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="42" stdDeviation="58" flood-color="#203044" flood-opacity="0.17"/>
+    <filter id="shadow" x="112" y="100" width="1376" height="840" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="46" stdDeviation="62" flood-color="#203044" flood-opacity="0.17"/>
     </filter>
     <filter id="play" x="0" y="0" width="200%" height="200%" color-interpolation-filters="sRGB">
       <feDropShadow dx="0" dy="22" stdDeviation="30" flood-color="#FF6B35" flood-opacity="0.28"/>
@@ -24,28 +24,38 @@
   <rect width="1600" height="1000" fill="url(#bg)"/>
   <rect width="1600" height="1000" fill="url(#orange)"/>
   <g filter="url(#shadow)">
-    <rect x="190" y="158" width="1220" height="684" rx="58" fill="white" fill-opacity="0.72"/>
-    <rect x="191" y="159" width="1218" height="682" rx="57" stroke="white" stroke-opacity="0.92" stroke-width="2"/>
+    <rect x="180" y="150" width="1240" height="704" rx="62" fill="white" fill-opacity="0.74"/>
+    <rect x="181" y="151" width="1238" height="702" rx="61" stroke="white" stroke-opacity="0.93" stroke-width="2"/>
   </g>
-  <rect x="268" y="240" width="916" height="520" rx="42" fill="url(#screen)"/>
-  <rect x="314" y="292" width="292" height="28" rx="14" fill="white" fill-opacity="0.28"/>
-  <rect x="314" y="354" width="390" height="16" rx="8" fill="white" fill-opacity="0.16"/>
-  <rect x="314" y="396" width="330" height="16" rx="8" fill="white" fill-opacity="0.16"/>
-  <rect x="314" y="438" width="436" height="16" rx="8" fill="white" fill-opacity="0.16"/>
-  <rect x="810" y="324" width="300" height="220" rx="34" fill="white" fill-opacity="0.12"/>
+  <rect x="238" y="208" width="900" height="530" rx="44" fill="url(#screen)"/>
+  <rect x="286" y="260" width="276" height="28" rx="14" fill="white" fill-opacity="0.28"/>
+  <rect x="286" y="324" width="364" height="16" rx="8" fill="white" fill-opacity="0.16"/>
+  <rect x="286" y="368" width="308" height="16" rx="8" fill="white" fill-opacity="0.16"/>
+  <rect x="286" y="412" width="422" height="16" rx="8" fill="white" fill-opacity="0.16"/>
+  <rect x="768" y="296" width="300" height="220" rx="34" fill="white" fill-opacity="0.12"/>
+  <rect x="792" y="320" width="252" height="172" rx="24" fill="white" fill-opacity="0.08"/>
   <g filter="url(#play)">
-    <circle cx="960" cy="434" r="72" fill="#FF6B35"/>
-    <path d="M938 394L1004 434L938 474V394Z" fill="white"/>
+    <circle cx="918" cy="406" r="70" fill="#FF6B35"/>
+    <path d="M897 367L962 406L897 445V367Z" fill="white"/>
   </g>
-  <rect x="314" y="650" width="768" height="20" rx="10" fill="white" fill-opacity="0.18"/>
-  <rect x="314" y="650" width="418" height="20" rx="10" fill="#55C7FF" fill-opacity="0.84"/>
-  <circle cx="750" cy="660" r="26" fill="white"/>
-  <rect x="1228" y="280" width="126" height="110" rx="30" fill="#FFFFFF" fill-opacity="0.74"/>
-  <rect x="1258" y="322" width="66" height="12" rx="6" fill="#05070A" fill-opacity="0.18"/>
-  <rect x="1228" y="430" width="126" height="110" rx="30" fill="#007AFF" fill-opacity="0.9"/>
-  <rect x="1258" y="472" width="66" height="12" rx="6" fill="white" fill-opacity="0.42"/>
-  <rect x="1228" y="580" width="126" height="110" rx="30" fill="#FFFFFF" fill-opacity="0.58"/>
-  <rect x="1258" y="622" width="66" height="12" rx="6" fill="#FF6B35" fill-opacity="0.52"/>
-  <text x="274" y="822" fill="#05070A" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="70" font-weight="800" letter-spacing="-4">AI Screen Record</text>
-  <text x="278" y="872" fill="#6E7681" font-family="IBM Plex Mono, monospace" font-size="18" font-weight="600" letter-spacing="3">ACTIONS BECOME SEARCHABLE MEMORY</text>
+  <rect x="286" y="616" width="760" height="22" rx="11" fill="white" fill-opacity="0.18"/>
+  <rect x="286" y="616" width="434" height="22" rx="11" fill="#55C7FF" fill-opacity="0.84"/>
+  <circle cx="738" cy="627" r="27" fill="white"/>
+  <g>
+    <rect x="286" y="670" width="92" height="34" rx="17" fill="white" fill-opacity="0.18"/>
+    <rect x="396" y="670" width="92" height="34" rx="17" fill="#FF6B35" fill-opacity="0.72"/>
+    <rect x="506" y="670" width="92" height="34" rx="17" fill="white" fill-opacity="0.18"/>
+    <rect x="616" y="670" width="92" height="34" rx="17" fill="#007AFF" fill-opacity="0.72"/>
+  </g>
+  <rect x="1180" y="226" width="154" height="120" rx="32" fill="#FFFFFF" fill-opacity="0.76"/>
+  <rect x="1214" y="270" width="86" height="12" rx="6" fill="#05070A" fill-opacity="0.18"/>
+  <rect x="1214" y="304" width="62" height="12" rx="6" fill="#007AFF" fill-opacity="0.36"/>
+  <rect x="1180" y="386" width="154" height="120" rx="32" fill="#007AFF" fill-opacity="0.9"/>
+  <rect x="1214" y="430" width="86" height="12" rx="6" fill="white" fill-opacity="0.42"/>
+  <rect x="1214" y="464" width="62" height="12" rx="6" fill="white" fill-opacity="0.28"/>
+  <rect x="1180" y="546" width="154" height="120" rx="32" fill="#FFFFFF" fill-opacity="0.62"/>
+  <rect x="1214" y="590" width="86" height="12" rx="6" fill="#05070A" fill-opacity="0.14"/>
+  <rect x="1214" y="624" width="62" height="12" rx="6" fill="#FF6B35" fill-opacity="0.52"/>
+  <text x="238" y="812" fill="#05070A" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="68" font-weight="800" letter-spacing="-4">AI Screen Record</text>
+  <text x="244" y="862" fill="#6E7681" font-family="IBM Plex Mono, monospace" font-size="18" font-weight="600" letter-spacing="3">ACTIONS BECOME SEARCHABLE MEMORY</text>
 </svg>
