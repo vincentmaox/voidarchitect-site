@@ -1,0 +1,27 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#F2F6FB"/><stop offset="1" stop-color="#EEF1F5"/></linearGradient>
+    <linearGradient id="app" x1="250" y1="165" x2="1320" y2="835" gradientUnits="userSpaceOnUse"><stop stop-color="#007AFF"/><stop offset="0.52" stop-color="#55C7FF"/><stop offset="1" stop-color="#05070A"/></linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1180 220) rotate(135) scale(560 440)"><stop stop-color="#55C7FF" stop-opacity="0.28"/><stop offset="1" stop-color="#55C7FF" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="96" y="78" width="1408" height="864" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="48" stdDeviation="64" flood-color="#203044" flood-opacity="0.18"/></filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#halo)"/>
+  <g filter="url(#shadow)">
+    <rect x="180" y="142" width="1240" height="716" rx="62" fill="white" fill-opacity="0.76"/>
+    <rect x="181" y="143" width="1238" height="714" rx="61" stroke="white" stroke-opacity="0.94" stroke-width="2"/>
+  </g>
+  <rect x="238" y="200" width="1124" height="600" rx="48" fill="url(#app)"/>
+  <rect x="286" y="248" width="1028" height="74" rx="37" fill="white" fill-opacity="0.18"/>
+  <circle cx="334" cy="285" r="10" fill="#FF6B35"/><circle cx="370" cy="285" r="10" fill="#FFCC4D"/><circle cx="406" cy="285" r="10" fill="#30D158"/>
+  <text x="286" y="424" fill="white" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="66" font-weight="800" letter-spacing="-4">Traceable RAG Answer</text>
+  <text x="290" y="474" fill="white" fill-opacity="0.62" font-family="IBM Plex Mono, monospace" font-size="18" font-weight="700" letter-spacing="3">6 CITATIONS · SCREEN 02</text>
+  <rect x="160" y="260" width="360" height="18" rx="9" fill="white" fill-opacity="0.30"/><rect x="160" y="306" width="322" height="18" rx="9" fill="white" fill-opacity="0.26"/><rect x="160" y="352" width="284" height="18" rx="9" fill="white" fill-opacity="0.22"/><rect x="160" y="398" width="246" height="18" rx="9" fill="white" fill-opacity="0.18"/>
+  <rect x="650" y="300" width="132" height="110" rx="28" fill="white" fill-opacity="0.22"/><rect x="682" y="346" width="68" height="12" rx="6" fill="white" fill-opacity="0.46"/><rect x="820" y="334" width="132" height="110" rx="28" fill="white" fill-opacity="0.32"/><rect x="852" y="380" width="68" height="12" rx="6" fill="white" fill-opacity="0.46"/><rect x="990" y="300" width="132" height="110" rx="28" fill="white" fill-opacity="0.42"/><rect x="1022" y="346" width="68" height="12" rx="6" fill="white" fill-opacity="0.46"/>
+  <rect x="650" y="510" width="514" height="104" rx="32" fill="white" fill-opacity="0.18"/>
+  <rect x="690" y="552" width="240" height="16" rx="8" fill="white" fill-opacity="0.38"/>
+  <rect x="690" y="588" width="330" height="12" rx="6" fill="white" fill-opacity="0.24"/>
+  <circle cx="620" cy="650" r="7" fill="white" fill-opacity="0.28"/><circle cx="710" cy="650" r="7" fill="white" fill-opacity="0.36"/><circle cx="800" cy="650" r="7" fill="white" fill-opacity="0.44"/><circle cx="890" cy="650" r="7" fill="white" fill-opacity="0.52"/><circle cx="980" cy="650" r="7" fill="white" fill-opacity="0.60"/><circle cx="1070" cy="650" r="7" fill="white" fill-opacity="0.68"/>
+  <rect x="286" y="702" width="258" height="48" rx="24" fill="white" fill-opacity="0.18"/>
+  <text x="320" y="732" fill="white" fill-opacity="0.82" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="800" letter-spacing="2">APP STORE MOCKUP</text>
+</svg>

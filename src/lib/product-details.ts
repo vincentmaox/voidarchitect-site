@@ -25,6 +25,7 @@ export interface ProductScreenshot {
   caption: string;
   eyebrow: string;
   metric: string;
+  asset: string;
 }
 
 export interface ProductCopy {
@@ -76,9 +77,9 @@ const studio: Record<ProductLocale, ProductCopy> = {
     productSignals: ["首页只展示高吸引力产品", "公开数据边界由 ProjectOS 控制", "Vercel 自动部署", "IP 语言路由"],
     roadmap: ["继续替换真实产品截图", "补齐精选产品长页", "把访问行为接回产品决策", "沉淀成工作室获客入口"],
     screenshots: [
-      { eyebrow: "HOME", title: "空间首页", caption: "用亮色玻璃、双色流体和极简排版建立第一印象。", metric: "5 curated apps" },
-      { eyebrow: "GALLERY", title: "精选产品橱窗", caption: "只展示最有吸引力的产品，不把主页做成项目目录。", metric: "signal first" },
-      { eyebrow: "SYNC", title: "ProjectOS 数据通道", caption: "公开字段由 ProjectOS 输出，站点只消费安全边界内的数据。", metric: "live registry" },
+      { eyebrow: "HOME", title: "空间首页", caption: "用亮色玻璃、双色流体和极简排版建立第一印象。", metric: "5 curated apps", asset: "/images/projects/voidarchitect-site/screens/home.svg" },
+      { eyebrow: "GALLERY", title: "精选产品橱窗", caption: "只展示最有吸引力的产品，不把主页做成项目目录。", metric: "signal first", asset: "/images/projects/voidarchitect-site/screens/gallery.svg" },
+      { eyebrow: "SYNC", title: "ProjectOS 数据通道", caption: "公开字段由 ProjectOS 输出，站点只消费安全边界内的数据。", metric: "live registry", asset: "/images/projects/voidarchitect-site/screens/sync.svg" },
     ],
   },
   en: {
@@ -100,9 +101,9 @@ const studio: Record<ProductLocale, ProductCopy> = {
     productSignals: ["Only high-signal products on homepage", "Public boundary controlled by ProjectOS", "Vercel auto deployment", "IP-aware language routing"],
     roadmap: ["Replace mockups with real screenshots", "Complete selected product pages", "Feed traffic signals back into product decisions", "Grow into the studio acquisition surface"],
     screenshots: [
-      { eyebrow: "HOME", title: "Spatial homepage", caption: "Bright glass, dual-color fluid energy, and minimal typography shape the first impression.", metric: "5 curated apps" },
-      { eyebrow: "GALLERY", title: "Selected product gallery", caption: "The homepage shows the strongest products, not the entire project inventory.", metric: "signal first" },
-      { eyebrow: "SYNC", title: "ProjectOS data channel", caption: "Public fields are exported by ProjectOS and consumed inside a safe data boundary.", metric: "live registry" },
+      { eyebrow: "HOME", title: "Spatial homepage", caption: "Bright glass, dual-color fluid energy, and minimal typography shape the first impression.", metric: "5 curated apps", asset: "/images/projects/voidarchitect-site/screens/home.svg" },
+      { eyebrow: "GALLERY", title: "Selected product gallery", caption: "The homepage shows the strongest products, not the entire project inventory.", metric: "signal first", asset: "/images/projects/voidarchitect-site/screens/gallery.svg" },
+      { eyebrow: "SYNC", title: "ProjectOS data channel", caption: "Public fields are exported by ProjectOS and consumed inside a safe data boundary.", metric: "live registry", asset: "/images/projects/voidarchitect-site/screens/sync.svg" },
     ],
   },
 };
@@ -127,9 +128,9 @@ const brain: Record<ProductLocale, ProductCopy> = {
     productSignals: ["适合高密度知识工作", "强调本地资料控制", "从检索走向写作输出", "服务个人 OS 而非单次聊天"],
     roadmap: ["强化引用质量", "完善桌面交互", "增加专题知识包", "连接更多个人工作流"],
     screenshots: [
-      { eyebrow: "LIBRARY", title: "本地知识库", caption: "资料按主题组织，索引状态和来源边界一眼可见。", metric: "local first" },
-      { eyebrow: "RAG", title: "可追溯回答", caption: "答案不是黑盒生成，而是带引用、带上下文、可回查。", metric: "6 citations" },
-      { eyebrow: "EXPORT", title: "报告导出", caption: "把多轮研究对话收束成可交付的 brief 或方案。", metric: "brief ready" },
+      { eyebrow: "LIBRARY", title: "本地知识库", caption: "资料按主题组织，索引状态和来源边界一眼可见。", metric: "local first", asset: "/images/projects/void-brain/screens/library.svg" },
+      { eyebrow: "RAG", title: "可追溯回答", caption: "答案不是黑盒生成，而是带引用、带上下文、可回查。", metric: "6 citations", asset: "/images/projects/void-brain/screens/rag.svg" },
+      { eyebrow: "EXPORT", title: "报告导出", caption: "把多轮研究对话收束成可交付的 brief 或方案。", metric: "brief ready", asset: "/images/projects/void-brain/screens/export.svg" },
     ],
   },
   en: {
@@ -151,9 +152,9 @@ const brain: Record<ProductLocale, ProductCopy> = {
     productSignals: ["Built for dense knowledge work", "Keeps local material in focus", "Moves from search to writing", "Serves a personal OS, not one-off chat"],
     roadmap: ["Improve citation quality", "Refine desktop interactions", "Add topic knowledge packs", "Connect more personal workflows"],
     screenshots: [
-      { eyebrow: "LIBRARY", title: "Local library", caption: "Sources are organized by topic with visible index and boundary states.", metric: "local first" },
-      { eyebrow: "RAG", title: "Traceable answer", caption: "Answers are grounded with citations, context, and a path back to source.", metric: "6 citations" },
-      { eyebrow: "EXPORT", title: "Report export", caption: "Research dialogue collapses into a deliverable brief or plan.", metric: "brief ready" },
+      { eyebrow: "LIBRARY", title: "Local library", caption: "Sources are organized by topic with visible index and boundary states.", metric: "local first", asset: "/images/projects/void-brain/screens/library.svg" },
+      { eyebrow: "RAG", title: "Traceable answer", caption: "Answers are grounded with citations, context, and a path back to source.", metric: "6 citations", asset: "/images/projects/void-brain/screens/rag.svg" },
+      { eyebrow: "EXPORT", title: "Report export", caption: "Research dialogue collapses into a deliverable brief or plan.", metric: "brief ready", asset: "/images/projects/void-brain/screens/export.svg" },
     ],
   },
 };
@@ -178,9 +179,9 @@ const hermes: Record<ProductLocale, ProductCopy> = {
     productSignals: ["更接近 cockpit 而非 chat", "适合长任务协作", "面向个人 AI 工作站", "强化人与 agent 的共同驾驶感"],
     roadmap: ["打磨实时状态面板", "增强语音链路", "接入任务历史", "形成日常 AI 控制中枢"],
     screenshots: [
-      { eyebrow: "VOICE", title: "语音控制入口", caption: "用自然语言发起任务，把 AI 从输入框里释放出来。", metric: "hands free" },
-      { eyebrow: "TASKS", title: "任务队列", caption: "长任务有状态、有阶段、有下一步，不再丢在聊天记录里。", metric: "live queue" },
-      { eyebrow: "STATE", title: "Agent 运行态", caption: "模型、工具、执行状态和结果都在一个 cockpit 内可观察。", metric: "observable" },
+      { eyebrow: "VOICE", title: "语音控制入口", caption: "用自然语言发起任务，把 AI 从输入框里释放出来。", metric: "hands free", asset: "/images/projects/hermes-desktop/screens/voice.svg" },
+      { eyebrow: "TASKS", title: "任务队列", caption: "长任务有状态、有阶段、有下一步，不再丢在聊天记录里。", metric: "live queue", asset: "/images/projects/hermes-desktop/screens/tasks.svg" },
+      { eyebrow: "STATE", title: "Agent 运行态", caption: "模型、工具、执行状态和结果都在一个 cockpit 内可观察。", metric: "observable", asset: "/images/projects/hermes-desktop/screens/state.svg" },
     ],
   },
   en: {
@@ -202,9 +203,9 @@ const hermes: Record<ProductLocale, ProductCopy> = {
     productSignals: ["Closer to cockpit than chat", "Designed for long-running collaboration", "A personal AI workstation surface", "Strengthens human-agent co-driving"],
     roadmap: ["Refine real-time status panel", "Strengthen voice pipeline", "Connect task history", "Become the daily AI control center"],
     screenshots: [
-      { eyebrow: "VOICE", title: "Voice control", caption: "Start work through natural language and move beyond the text box.", metric: "hands free" },
-      { eyebrow: "TASKS", title: "Task queue", caption: "Long-running work has state, phases, and visible next actions.", metric: "live queue" },
-      { eyebrow: "STATE", title: "Agent state", caption: "Models, tools, execution state, and output are observable in one cockpit.", metric: "observable" },
+      { eyebrow: "VOICE", title: "Voice control", caption: "Start work through natural language and move beyond the text box.", metric: "hands free", asset: "/images/projects/hermes-desktop/screens/voice.svg" },
+      { eyebrow: "TASKS", title: "Task queue", caption: "Long-running work has state, phases, and visible next actions.", metric: "live queue", asset: "/images/projects/hermes-desktop/screens/tasks.svg" },
+      { eyebrow: "STATE", title: "Agent state", caption: "Models, tools, execution state, and output are observable in one cockpit.", metric: "observable", asset: "/images/projects/hermes-desktop/screens/state.svg" },
     ],
   },
 };
@@ -229,9 +230,9 @@ const recorder: Record<ProductLocale, ProductCopy> = {
     productSignals: ["适合调试与教学", "把行为转为上下文", "补足传统笔记盲区", "可作为 agent 记忆入口"],
     roadmap: ["提高事件识别精度", "优化时间线界面", "增加导出模板", "与个人知识库联动"],
     screenshots: [
-      { eyebrow: "PLAYER", title: "屏幕回放", caption: "把工作过程以播放器方式重看，定位关键动作。", metric: "timeline" },
-      { eyebrow: "EVENTS", title: "操作时间线", caption: "点击、切换、输入和页面变化被整理成可读事件。", metric: "action map" },
-      { eyebrow: "SUMMARY", title: "AI 摘要", caption: "把一段屏幕过程压缩成可检索、可复盘的工作记忆。", metric: "memory card" },
+      { eyebrow: "PLAYER", title: "屏幕回放", caption: "把工作过程以播放器方式重看，定位关键动作。", metric: "timeline", asset: "/images/projects/ai-screen-record/screens/player.svg" },
+      { eyebrow: "EVENTS", title: "操作时间线", caption: "点击、切换、输入和页面变化被整理成可读事件。", metric: "action map", asset: "/images/projects/ai-screen-record/screens/events.svg" },
+      { eyebrow: "SUMMARY", title: "AI 摘要", caption: "把一段屏幕过程压缩成可检索、可复盘的工作记忆。", metric: "memory card", asset: "/images/projects/ai-screen-record/screens/summary.svg" },
     ],
   },
   en: {
@@ -253,9 +254,9 @@ const recorder: Record<ProductLocale, ProductCopy> = {
     productSignals: ["Useful for debugging and teaching", "Turns behavior into context", "Covers what notes miss", "Can become an agent memory inlet"],
     roadmap: ["Improve event recognition", "Refine timeline UI", "Add export templates", "Connect with personal knowledge base"],
     screenshots: [
-      { eyebrow: "PLAYER", title: "Screen playback", caption: "Replay the work process and jump to key actions.", metric: "timeline" },
-      { eyebrow: "EVENTS", title: "Action timeline", caption: "Clicks, switches, typing, and page changes become readable events.", metric: "action map" },
-      { eyebrow: "SUMMARY", title: "AI summary", caption: "Compress a screen session into searchable, reviewable work memory.", metric: "memory card" },
+      { eyebrow: "PLAYER", title: "Screen playback", caption: "Replay the work process and jump to key actions.", metric: "timeline", asset: "/images/projects/ai-screen-record/screens/player.svg" },
+      { eyebrow: "EVENTS", title: "Action timeline", caption: "Clicks, switches, typing, and page changes become readable events.", metric: "action map", asset: "/images/projects/ai-screen-record/screens/events.svg" },
+      { eyebrow: "SUMMARY", title: "AI summary", caption: "Compress a screen session into searchable, reviewable work memory.", metric: "memory card", asset: "/images/projects/ai-screen-record/screens/summary.svg" },
     ],
   },
 };
@@ -280,9 +281,9 @@ const texas: Record<ProductLocale, ProductCopy> = {
     productSignals: ["视觉和故事张力强", "适合产品化传播", "游戏化承载抽象训练", "与频域决策气质一致"],
     roadmap: ["完善核心循环", "扩展 AI 人格牌桌", "增强成长系统", "打磨可分享战报"],
     screenshots: [
-      { eyebrow: "TABLE", title: "策略牌桌", caption: "每一手牌都是概率、风险和纪律的训练回合。", metric: "decision loop" },
-      { eyebrow: "PERSONA", title: "AI 性格对手", caption: "不同人格迫使玩家识别模式，而不是机械背策略。", metric: "6 personas" },
-      { eyebrow: "RUN", title: "Roguelike 成长", caption: "训练反馈沉淀为成长路径，让策略学习有长期粘性。", metric: "level 7" },
+      { eyebrow: "TABLE", title: "策略牌桌", caption: "每一手牌都是概率、风险和纪律的训练回合。", metric: "decision loop", asset: "/images/projects/texas-philosopher/screens/table.svg" },
+      { eyebrow: "PERSONA", title: "AI 性格对手", caption: "不同人格迫使玩家识别模式，而不是机械背策略。", metric: "6 personas", asset: "/images/projects/texas-philosopher/screens/persona.svg" },
+      { eyebrow: "RUN", title: "Roguelike 成长", caption: "训练反馈沉淀为成长路径，让策略学习有长期粘性。", metric: "level 7", asset: "/images/projects/texas-philosopher/screens/run.svg" },
     ],
   },
   en: {
@@ -304,9 +305,9 @@ const texas: Record<ProductLocale, ProductCopy> = {
     productSignals: ["Strong visual and story tension", "Easy to communicate as a product", "Games carry abstract training", "Matches frequency-domain decision taste"],
     roadmap: ["Complete core loop", "Expand AI persona tables", "Strengthen growth system", "Polish shareable battle reports"],
     screenshots: [
-      { eyebrow: "TABLE", title: "Strategy table", caption: "Every hand becomes a training round for probability, risk, and discipline.", metric: "decision loop" },
-      { eyebrow: "PERSONA", title: "AI personas", caption: "Different personalities force pattern reading instead of rote strategy.", metric: "6 personas" },
-      { eyebrow: "RUN", title: "Roguelike growth", caption: "Training feedback becomes a progression path with long-term pull.", metric: "level 7" },
+      { eyebrow: "TABLE", title: "Strategy table", caption: "Every hand becomes a training round for probability, risk, and discipline.", metric: "decision loop", asset: "/images/projects/texas-philosopher/screens/table.svg" },
+      { eyebrow: "PERSONA", title: "AI personas", caption: "Different personalities force pattern reading instead of rote strategy.", metric: "6 personas", asset: "/images/projects/texas-philosopher/screens/persona.svg" },
+      { eyebrow: "RUN", title: "Roguelike growth", caption: "Training feedback becomes a progression path with long-term pull.", metric: "level 7", asset: "/images/projects/texas-philosopher/screens/run.svg" },
     ],
   },
 };
