@@ -10,6 +10,9 @@ export default defineConfig({
   output: 'server',
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      chunkSizeWarningLimit: 900,
+    },
   },
   integrations: [react()],
   adapter: vercel(),

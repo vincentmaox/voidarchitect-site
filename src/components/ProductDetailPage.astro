@@ -23,9 +23,12 @@ const basePath = locale === "en" ? "/en" : "";
 const homeHref = `${basePath}/#projects`;
 const title = `${detail.projectName} — ${productLabel} | Void Architect`;
 const description = copy.subhead;
+const canonicalPath = `${basePath}/projects/${slug}`;
+const ogImage = coverImage || `/images/projects/${slug}/cover.svg`;
+const contactHref = `mailto:${dict.nav.contact}?subject=${encodeURIComponent(`${detail.projectName} product inquiry`)}`;
 ---
 
-<Layout title={title} description={description} lang={locale === "en" ? "en" : "zh-CN"}>
+<Layout title={title} description={description} lang={locale === "en" ? "en" : "zh-CN"} canonicalPath={canonicalPath} ogImage={ogImage}>
   <main class="product-detail-page relative min-h-screen overflow-hidden px-5 py-6 text-void-ink md:px-8">
     <div class={`pointer-events-none absolute left-[-10rem] top-24 h-[34rem] w-[34rem] rounded-full blur-3xl ${theme.halo}`} />
     <div class={`pointer-events-none absolute right-[-12rem] top-8 h-[42rem] w-[42rem] rounded-full blur-3xl ${theme.haloSecondary}`} />
@@ -70,13 +73,16 @@ const description = copy.subhead;
         </p>
 
         <div class="mt-10 flex flex-wrap gap-3">
+          <a href={contactHref} class="rounded-full bg-void-ink px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white shadow-[0_18px_54px_rgba(5,7,10,0.18)] transition hover:-translate-y-0.5 hover:bg-void-accent">
+            {copy.ctaPrimary} ↗
+          </a>
           {project.github_url && (
-            <a href={project.github_url} target="_blank" rel="noopener noreferrer" class="rounded-full bg-void-ink px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white shadow-[0_18px_54px_rgba(5,7,10,0.18)] transition hover:-translate-y-0.5 hover:bg-void-accent">
+            <a href={project.github_url} target="_blank" rel="noopener noreferrer" class="rounded-full border border-void-border/80 bg-white/70 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-void-ink/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-void-ink hover:text-void-ink">
               GitHub ↗
             </a>
           )}
           <a href={homeHref} class="rounded-full border border-void-border/80 bg-white/70 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-void-ink/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-void-ink hover:text-void-ink">
-            Back to Gallery
+            {copy.ctaSecondary}
           </a>
         </div>
       </div>
@@ -110,10 +116,10 @@ const description = copy.subhead;
         </p>
       </div>
       <div class="screenshot-rail flex snap-x gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
-        {copy.screenshots.map((screen) => (
-          <article class="group min-w-[82vw] snap-center overflow-hidden rounded-[2.25rem] border border-white/80 bg-white/68 p-4 shadow-[0_30px_100px_rgba(28,39,58,0.12)] backdrop-blur-2xl transition hover:-translate-y-1 md:min-w-0">
-            <div class="relative h-72 overflow-hidden rounded-[1.75rem] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_18px_60px_rgba(28,39,58,0.12)]">
-              <img src={screen.asset} alt={`${detail.projectName} ${screen.title}`} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+        {copy.screenshots.map((screen, index) => (
+          <article class="group min-w-[86vw] snap-center overflow-hidden rounded-[2.25rem] border border-white/80 bg-white/68 p-4 shadow-[0_30px_100px_rgba(28,39,58,0.12)] backdrop-blur-2xl transition hover:-translate-y-1 md:min-w-0">
+            <div class="relative h-60 overflow-hidden rounded-[1.75rem] bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_18px_60px_rgba(28,39,58,0.12)] sm:h-72">
+              <img src={screen.asset} alt={`${detail.projectName} ${screen.title}`} loading={index === 0 ? "eager" : "lazy"} decoding="async" fetchpriority={index === 0 ? "high" : "auto"} class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
             </div>
             <div class="mt-5 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-void-mute">
               <span>{screen.eyebrow}</span>
@@ -170,6 +176,27 @@ const description = copy.subhead;
               {item}
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl pb-16">
+      <div class:list={["relative overflow-hidden rounded-[2.75rem] border border-white/80 p-8 text-white shadow-[0_42px_130px_rgba(5,7,10,0.18)] md:p-12", theme.promise]}>
+        <div class={`pointer-events-none absolute right-[-6rem] top-[-8rem] h-80 w-80 rounded-full bg-gradient-to-br ${theme.gradient} opacity-40 blur-3xl`} />
+        <div class="relative grid gap-8 md:grid-cols-[minmax(0,0.78fr)_auto] md:items-end">
+          <div>
+            <p class="font-mono text-[10px] uppercase tracking-[0.26em] text-white/54">{copy.ctaLabel}</p>
+            <h2 class="mt-5 max-w-3xl text-4xl font-bold leading-[0.98] tracking-[-0.065em] md:text-6xl">{copy.ctaTitle}</h2>
+            <p class="mt-6 max-w-2xl text-base leading-8 text-white/66 md:text-lg">{copy.ctaBody}</p>
+          </div>
+          <div class="flex flex-wrap gap-3 md:justify-end">
+            <a href={contactHref} class="rounded-full bg-white px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-void-ink shadow-[0_18px_54px_rgba(255,255,255,0.16)] transition hover:-translate-y-0.5 hover:bg-void-accent hover:text-white">
+              {copy.ctaPrimary} ↗
+            </a>
+            <a href={homeHref} class="rounded-full border border-white/26 bg-white/10 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-white/78 backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/18 hover:text-white">
+              {copy.ctaSecondary}
+            </a>
+          </div>
         </div>
       </div>
     </section>

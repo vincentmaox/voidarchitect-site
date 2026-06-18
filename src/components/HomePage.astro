@@ -12,7 +12,7 @@ const { dict, lang } = Astro.props;
 const locale = lang === "en" ? "en" : "zh";
 ---
 
-<Layout title={dict.meta.title} description={dict.meta.description} lang={lang}>
+<Layout title={dict.meta.title} description={dict.meta.description} lang={lang} canonicalPath={locale === "en" ? "/en/" : "/"} ogImage="/images/projects/voidarchitect-site/cover.svg">
   <main class="relative min-h-screen text-void-fg">
     <section class="relative min-h-screen overflow-hidden px-5 py-5 md:px-8 md:py-8">
       <FluidHero client:only="react" />

@@ -6,13 +6,21 @@ interface Props {
   title?: string;
   description?: string;
   lang?: string;
+  canonicalPath?: string;
+  ogImage?: string;
 }
 
 const {
   title = "Void Architect — 茅弘毅 / 双世界译员 / 频域决策",
   description = "虚空建筑师工作室。AI 与现实交界处的频域决策与非对称风险套利。",
   lang = "zh-CN",
+  canonicalPath = lang === "en" ? "/en/" : "/",
+  ogImage = "/images/projects/voidarchitect-site/cover.svg",
 } = Astro.props;
+
+const siteUrl = "https://www.voidarchitect.studio";
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+const ogImageUrl = new URL(ogImage, siteUrl).toString();
 ---
 
 <!doctype html>
@@ -25,7 +33,13 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.voidarchitect.studio" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageUrl} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
