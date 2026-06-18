@@ -46,6 +46,7 @@ const gradientCls = appGradient(p.stage);
 const stageText = dict.projects.stageLabels[p.stage] ?? p.stage;
 const desc = p.description?.trim() || dict.projects.fallbackDescription;
 const initials = p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase() || "VA";
+const productLabel = p.product_label?.trim() || "Independent App";
 const coverImage = p.cover_image?.trim();
 const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 ---
@@ -80,7 +81,7 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
         </div>
         <div class="min-w-0 text-white drop-shadow-[0_1px_8px_rgba(5,7,10,0.28)]">
           <p class="truncate font-semibold tracking-[-0.03em]" class:list={big ? "text-2xl" : "text-base"}>{p.name}</p>
-          <p class="font-mono text-[10px] uppercase tracking-[0.16em] opacity-80">Independent App</p>
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] opacity-80">{productLabel}</p>
         </div>
       </div>
     </div>
@@ -88,6 +89,9 @@ const sizeCls = big ? "md:col-span-2 lg:col-span-2 md:row-span-2" : "";
 
   <div class="relative z-10 flex flex-1 flex-col gap-4 p-5 md:p-6" class:list={big ? "md:p-8" : ""}>
     <div class="flex flex-wrap items-center gap-2">
+      <span class="inline-flex items-center rounded-full border border-void-border/70 bg-white/76 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-void-ink/72 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+        {productLabel}
+      </span>
       <span class={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-wider ${badgeCls}`}>
         <span class="inline-block h-1.5 w-1.5 rounded-full bg-current" />
         {stageText}

@@ -1,0 +1,50 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#F3F7FB"/>
+      <stop offset="1" stop-color="#EEF1F5"/>
+    </linearGradient>
+    <linearGradient id="felt" x1="252" y1="230" x2="1188" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#052E2A"/>
+      <stop offset="0.55" stop-color="#0B5D56"/>
+      <stop offset="1" stop-color="#05070A"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="370" y1="320" x2="1120" y2="790" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD89A"/>
+      <stop offset="0.55" stop-color="#FFB75E"/>
+      <stop offset="1" stop-color="#FF6B35"/>
+    </linearGradient>
+    <radialGradient id="blue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1170 230) rotate(132) scale(520 440)">
+      <stop stop-color="#007AFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#007AFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="120" y="112" width="1360" height="810" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="44" stdDeviation="60" flood-color="#203044" flood-opacity="0.18"/>
+    </filter>
+    <filter id="card" x="0" y="0" width="200%" height="200%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#05070A" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#blue)"/>
+  <g filter="url(#shadow)">
+    <rect x="190" y="158" width="1220" height="684" rx="58" fill="white" fill-opacity="0.72"/>
+    <rect x="191" y="159" width="1218" height="682" rx="57" stroke="white" stroke-opacity="0.92" stroke-width="2"/>
+  </g>
+  <rect x="252" y="230" width="1096" height="520" rx="260" fill="url(#felt)"/>
+  <rect x="292" y="270" width="1016" height="440" rx="220" stroke="url(#gold)" stroke-width="8" opacity="0.9"/>
+  <g filter="url(#card)">
+    <rect x="562" y="322" width="148" height="210" rx="22" fill="white" transform="rotate(-9 562 322)"/>
+    <rect x="726" y="298" width="148" height="210" rx="22" fill="white" transform="rotate(5 726 298)"/>
+    <rect x="888" y="336" width="148" height="210" rx="22" fill="white" transform="rotate(14 888 336)"/>
+  </g>
+  <text x="596" y="436" fill="#05070A" font-family="Instrument Sans, sans-serif" font-size="74" font-weight="800" transform="rotate(-9 596 436)">A</text>
+  <text x="762" y="414" fill="#FF6B35" font-family="Instrument Sans, sans-serif" font-size="74" font-weight="800" transform="rotate(5 762 414)">Φ</text>
+  <text x="924" y="452" fill="#007AFF" font-family="Instrument Sans, sans-serif" font-size="74" font-weight="800" transform="rotate(14 924 452)">K</text>
+  <circle cx="430" cy="490" r="48" fill="#FF6B35"/>
+  <circle cx="1170" cy="490" r="48" fill="#007AFF"/>
+  <circle cx="800" cy="634" r="54" fill="#FFFFFF" fill-opacity="0.16" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="2"/>
+  <text x="280" y="824" fill="#05070A" font-family="Instrument Sans, PingFang SC, sans-serif" font-size="70" font-weight="800" letter-spacing="-4">Texas Philosopher</text>
+  <text x="284" y="874" fill="#6E7681" font-family="IBM Plex Mono, monospace" font-size="18" font-weight="600" letter-spacing="3">POKER STRATEGY · AI PERSONAS · ROGUELIKE TRAINING</text>
+</svg>

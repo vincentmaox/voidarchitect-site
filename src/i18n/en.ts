@@ -24,9 +24,9 @@ export const en: Dict = {
     location: "2026 · Shenzhen",
   },
   projects: {
-    eyebrow: "/ Projects · live from ProjectOS",
-    title: "Works in Progress",
-    subtitle: "Auto-synced by ProjectOS · sorted by stage and latest activity",
+    eyebrow: "/ Selected Works · product gallery",
+    title: "Selected Products",
+    subtitle: "Five AI products taking shape · curated for signal, not exhaustive inventory",
     empty: "No public projects yet (data wiring in progress).",
     freqLabel: "Resonance",
     repoLabel: "GitHub",

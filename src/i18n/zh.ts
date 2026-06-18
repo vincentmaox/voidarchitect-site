@@ -21,9 +21,9 @@ export const zh = {
     location: "2026 · Shenzhen",
   },
   projects: {
-    eyebrow: "/ Projects · 来自 ProjectOS 实时数据",
-    title: "在建工程",
-    subtitle: "由 ProjectOS 自动同步 · 按 stage / 最新动作排序",
+    eyebrow: "/ Selected Works · 产品橱窗",
+    title: "精选产品",
+    subtitle: "五个正在成形的 AI 产品 · 不展示清单，只展示最有吸引力的作品",
     empty: "暂无可公开项目（数据接入中）。",
     freqLabel: "三频",
     repoLabel: "GitHub",

@@ -19,6 +19,7 @@ export interface PublicProject {
   last_action: LastAction | null;
   github_url: string | null;
   cover_image?: string | null;
+  product_label?: string | null;
   featured?: boolean;
   showcase_rank?: number | null;
   tech_stack: string[];
