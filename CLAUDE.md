@@ -58,6 +58,24 @@ ProjectOS 主仓相关日志（在 `D:/ClaudeCodeProjects/_ProjectOS`）：
 - ✅ D2.3 蓝青科技风过渡版
 - ✅ D2.4 大片感终版（电光青 + 炽热橙双色流体 + 渐变发光球 + 鼠标光晕 + 玻璃拟态卡片）
 - ✅ D3.1 跨仓 webhook（ProjectOS push → GitHub Actions → Vercel rebuild，实时同步）
-- ⏸ D3.2 详情页 `/projects/[slug]` + view transitions
+- ✅ D3.2 精选产品详情页 `/projects/[slug]` + `/en/projects/[slug]`
+- ✅ D3.6 精选产品橱窗（5 个精选产品 + 半真实 SVG mockup + cover）
+- ✅ D3.7 产品独立 accent theme + View Transition
+- ✅ D3.8 双语 App Store 截图轮播
+- ✅ D3.9 真实感截图资产（15 张高保真 SVG）
+- ✅ D3.10-D3.13 精选产品展示收口（CTA + storyHook + SEO + 移动端轮播）
+- ✅ D3.14 双语咨询入口 `/contact` + `/en/contact`（纯 mailto 承接）
+- ✅ D3.15 最小事件埋点方案（`docs/analytics-plan.md`）
+- ✅ D3.16 / D3.18 生产验收通过
+- ✅ D3.17 外部传播包（`docs/launch-copy-pack.md`）
+- ✅ D3.19 首页 hero 微文案收口
+- ⏸ D3.20 最小埋点落地（Plausible / Vercel Analytics，等流量）
 - ⏸ D3.3 voidcompass 旧仓归档跳转
-- ⏸ D3.6 产品图占位 → 真实项目截图
+- ⏸ D3.4 Lighthouse prefers-reduced-motion 降级
+- ⏸ D3.21 根据反馈选定 1 个产品深度推
+
+**当前状态**：可外发测试。已有首页橱窗 + 5 个精选产品详情页 + 中英双语 + 高保真截图 + 轻量咨询入口 + 外部传播文案 + 最小埋点规划。
+
+**精选产品白名单**（仅这 5 个）：`voidarchitect-site` / `void-brain` / `hermes-desktop` / `ai-screen-record` / `texas-philosopher`。继续排除 `NuclearPowerAI` 及明显核电相关项目。
+
+**下一步建议**：先用 `docs/launch-copy-pack.md` 发第一轮朋友圈 / 私域，观察真实反馈；有流量后再做 D3.20。

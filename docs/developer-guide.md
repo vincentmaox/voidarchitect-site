@@ -33,28 +33,39 @@
 voidarchitect-site/
 ├─ src/
 │  ├─ pages/
-│  │  ├─ index.astro          # 中文版根（prerender=false）
-│  │  └─ en/index.astro       # 英文版（prerender=false）
+│  │  ├─ index.astro                # 中文根（prerender=false）
+│  │  ├─ en/index.astro             # 英文根（prerender=false）
+│  │  ├─ projects/[slug].astro      # 中文精选产品详情页
+│  │  ├─ en/projects/[slug].astro   # 英文精选产品详情页
+│  │  ├─ contact.astro              # 中文咨询入口
+│  │  └─ en/contact.astro           # 英文咨询入口
 │  ├─ components/
-│  │  ├─ HomePage.astro       # 共享布局 — Hero + ProjectGrid + Footer
-│  │  ├─ FluidHero.tsx        # WebGL 流体 — GLSL shader
-│  │  ├─ ProjectGrid.astro    # Bento Grid — 调 loadRegistry()
-│  │  └─ ProjectCard.astro    # 单卡 — stage 配色 + freq + last_action
+│  │  ├─ HomePage.astro             # 共享布局 — Hero + ProjectGrid + Footer
+│  │  ├─ FluidHero.tsx              # WebGL 流体 — GLSL shader
+│  │  ├─ ProjectGrid.astro          # Bento Grid — 调 loadRegistry()
+│  │  ├─ ProjectCard.astro          # 单卡 — stage 配色 + freq + storyHook
+│  │  ├─ ProductDetailPage.astro    # 双语产品详情页（含截图轮播 + CTA）
+│  │  └─ ContactPage.astro          # 双语咨询页（mailto 承接）
 │  ├─ layouts/
-│  │  └─ Layout.astro         # html shell + 字体 + noise overlay
+│  │  └─ Layout.astro               # html shell + 字体 + canonical/OG/Twitter
 │  ├─ lib/
-│  │  └─ registry.ts          # 构建期 fetch + sort
+│  │  ├─ registry.ts                # 构建期 fetch + sort
+│  │  └─ product-details.ts         # 精选产品数据模型 + 双语文案 + 截图清单
 │  ├─ i18n/
-│  │  ├─ zh.ts                # Dict 类型源（中文）
-│  │  └─ en.ts                # 英文版（typed Dict）
+│  │  ├─ zh.ts                      # Dict 类型源（中文）
+│  │  └─ en.ts                      # 英文版（typed Dict）
 │  ├─ styles/
-│  │  └─ global.css           # @theme + .noise + .text-display + .glass + .gradient-border
+│  │  └─ global.css                 # @theme + .noise + .text-display + .glass + .gradient-border
 │  ├─ docs/
-│  │  └─ journal/             # 项目日志（按日期）
-│  └─ middleware.ts           # IP 路由 + cookie sticky
-├─ astro.config.mjs           # output:'server' + react + vercel adapter
+│  │  └─ journal/                   # 项目日志（按日期）
+│  └─ middleware.ts                 # IP 路由 + cookie sticky
+├─ conversation_log/                # 老茅/老赫对话归档（按日期）
+├─ scripts/
+│  └─ generate-product-screenshots.py  # 复现 15 张高保真产品截图 SVG
+├─ astro.config.mjs                 # output:'server' + react + vercel adapter
 ├─ package.json
 └─ public/
+   └─ images/projects/*/screens/*.svg   # 5 个精选产品 × 3 张 = 15 张截图
 ```
 
 ## 关键文件速读
@@ -123,6 +134,60 @@ Hero 结构：
 - 配色 stage-driven（badge 胶囊样式）
 - **Glass 效果**：`background: rgba(22,27,34,0.5); backdrop-filter: blur(20px); border: 1px solid rgba(48,54,61,0.6)`
 - 悬停：`translateY(-3px)` + cyan shadow + border 高亮
+- **白名单映射**：卡片只链接到 5 个精选产品详情页（见 `FEATURED_PRODUCT_SLUGS`），其他项目卡片不展示「查看详情」入口
+- **storyHook**：若产品在白名单内，卡片正文上方渲染 `copy[locale].storyHook`（一句话产品钩子）
+
+### `src/lib/product-details.ts` — 精选产品数据模型
+
+```ts
+export const FEATURED_PRODUCT_SLUGS = [
+  "voidarchitect-site",
+  "void-brain",
+  "hermes-desktop",
+  "ai-screen-record",
+  "texas-philosopher",
+] as const;
+```
+
+- **白名单 5 个产品**，由 `productSlug(p)` 通过 `SLUG_BY_NAME` 把 registry 项目名映射到 slug
+- 非 5 个之一时返回 `null`，详情页和卡片都不会渲染入口
+- `ProductCopy` 是单语文案包：headline / subhead / scenario / promise / interfaceNotes / productSignals / roadmap / screenshots（含 `asset` SVG 路径）/ storyHook / CTA 系列
+- `PRODUCT_DETAILS: Record<FeaturedProductSlug, ProductDetail>` 是单一真值表，中英文都在同一文件，缺一就会 type-check 报错
+- 每个产品有独立 `accent: "blue" | "orange" | "ink"` 和 `theme`（文字色 / 渐变 / halo）
+
+### `src/components/ProductDetailPage.astro` — 精选产品详情页
+
+- 接收 `slug / project / related / dict / locale`，中英路由共用一份组件
+- 关键路径常量：
+  - `basePath = locale === "en" ? "/en" : ""`
+  - `canonicalPath = ${basePath}/projects/${slug}`
+  - `contactHref = ${basePath}/contact?product=${slug}` （CTA 跳咨询页，不直接 mailto）
+  - `ogImage = coverImage || /images/projects/${slug}/cover.svg`
+- Layout 调用传入 `canonicalPath` / `ogImage` / `lang`
+- 截图轮播：每张 `screen.asset` 是真实 SVG，首张 `loading="eager" fetchpriority="high"`，其余 lazy
+- 底部 CTA 双按钮：主按钮跳 contact（带 product 参数），次按钮回产品橱窗锚点
+
+### `src/components/ContactPage.astro` — 双语咨询入口
+
+- 接收 `dict / locale`
+- 三个咨询方向（中英对等）：产品诊断 / 知识库 · Agent 系统 / 网站 · 产品页改造
+- 不接数据库、不接表单后端、不接第三方表单服务
+- 每个方向生成预填 `mailto:`，subject + body 用 `encodeURIComponent` 安全编码
+- `?product=xxx` 参数会注入到 subject，便于邮件分流
+
+### `src/layouts/Layout.astro` — SEO / 分享元数据
+
+- 新增 props：`canonicalPath` / `ogImage`
+- `siteUrl = "https://www.voidarchitect.studio"`，URL 由 `new URL(path, siteUrl)` 拼装
+- 输出：`<link rel="canonical">`、`og:url`、`og:image`、`twitter:card=summary_large_image`、`twitter:title/description/image`
+- 首页、产品详情页、contact 页都传各自的 canonical 和 OG image
+
+### `scripts/generate-product-screenshots.py` — 截图资产复现
+
+- 纯 Python 字符串生成 SVG（无外部依赖），可重复执行覆盖输出
+- 覆盖 5 个产品 × 3 张截图 = 15 张，输出到 `public/images/projects/*/screens/*.svg`
+- 视觉目标是「像 App Store 高保真截图」，而非 CSS 假 UI
+- 修改截图视觉时直接改脚本，再 `python scripts/generate-product-screenshots.py` 重新生成
 
 ## 数据通道
 
@@ -225,13 +290,30 @@ data/feishu-base-config.json
 
 ## 升级路径（D3+）
 
-- ✅ **D3.1** 跨仓 webhook（ProjectOS push → GitHub Actions → Vercel rebuild）— 已完成
-- **D3.2** 详情页 `/projects/[slug]`：每个项目详情 + view transitions
-- **D3.3** voidcompass 旧仓 README 加 deprecation notice + 指向新仓
-- **D3.4** Lighthouse 优化：当前 Hero shader 较重，可加 `@media (prefers-reduced-motion)` 降级到静态背景
-- **D3.5** RSS / Atom feed of last_action（社交圈想订阅老茅近期活动）
-- **D3.6** 产品图占位 → 真实项目截图（每个项目加 `public/images/` 缩略图）
-- **D3.7** 项目卡悬停动画增强（Framer Motion：scale + glow intensity 渐变）
+### 已完成
+
+- ✅ **D3.1** 跨仓 webhook（ProjectOS push → GitHub Actions → Vercel rebuild）
+- ✅ **D3.2** 精选产品详情页 `/projects/[slug]` + `/en/projects/[slug]`
+- ✅ **D3.6** 精选作品产品化（替换 5 个精选产品 + TexasPhilosopher 入选 + 半真实 mockup）
+- ✅ **D3.6+** 真实 SVG 截图资产（5 × 3 = 15 张高保真 App Store 风截图）
+- ✅ **D3.7** 产品独立 accent theme + 首页 → 详情页 View Transition
+- ✅ **D3.8** 双语 App Store 截图轮播
+- ✅ **D3.9** 截图卡升级为独立真实感视觉资产
+- ✅ **D3.10-D3.13** 精选产品展示收口：截图生成脚本、双语 CTA、首页 storyHook、SEO canonical/OG/Twitter、移动端轮播优化
+- ✅ **D3.14** 双语轻量咨询入口 `/contact` + `/en/contact`（纯 `mailto:` 承接）
+- ✅ **D3.15** 最小事件埋点方案（`docs/analytics-plan.md`，未接平台）
+- ✅ **D3.16** D3.10-D3.13 生产验收通过
+- ✅ **D3.17** 外部传播包（`docs/launch-copy-pack.md`，3 组中英文案）
+- ✅ **D3.18** D3.14 contact 生产验收通过
+- ✅ **D3.19** 首页 hero 首屏微文案收口（中英双语）
+
+### 待办（按真实传播反馈决定优先级）
+
+- ⏸ **D3.20** 最小事件埋点落地（Plausible 优先，其次 Vercel Analytics）—— 等流量上来再做
+- ⏸ **D3.3** voidcompass 旧仓 README 加 deprecation notice + 指向新仓
+- ⏸ **D3.4** Lighthouse 优化：Hero shader 加 `@media (prefers-reduced-motion)` 降级
+- ⏸ **D3.5** RSS / Atom feed of last_action
+- ⏸ **D3.21** 根据反馈选定 1 个产品深度推（候选：`void-brain` / `hermes-desktop` / `AI-Screen-Record`）
 
 ## 协作约定
 
